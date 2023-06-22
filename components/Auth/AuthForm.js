@@ -1,27 +1,34 @@
 import { useState } from 'react';
 import { View } from 'react-native';
 
+import Button from '../ui/Button';
 import Input from './Input';
 
 const AuthForm = () => {
   const [enteredEmail, setEnteredEmail] = useState('');
+  const [enteredName, setEnteredName] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
-  const [enteredConfirmPassword, setEnteredConfirmPassword] = useState('');
+
+
 
   return (
     <View>
       <Input
-        label="Email"
+        placeholder="Email"
         value={enteredEmail}
       />
       <Input
-        label="Password"
-        value={enteredPassword}
+        placeholder="Name"
+        value={enteredName}
       />
       <Input
-        label="Confirm Password"
-        value={enteredConfirmPassword}
+        placeholder="Password"
+        value={enteredPassword}
       />
+
+      <View>
+        <Button />
+      </View>
     </View>
   );
 }
