@@ -10,7 +10,7 @@ const Button = () => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: 'black',
+    backgroundColor: 'purple',
     padding: 10,
     borderRadius: 20,
     borderColor: '#000',
