@@ -1,8 +1,10 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-const FlatButton = ({ children }) => {
+const FlatButton = ({ children, onPress }) => {
   return (
-    <Pressable>
+    <Pressable
+    onPress={onPress}
+    >
       <View>
         <Text style={styles.buttonText}> {children} </Text>
       </View>

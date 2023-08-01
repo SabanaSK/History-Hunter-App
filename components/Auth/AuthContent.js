@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import AuthForm from './AuthForm';
 import FlatButton from '../ui/FlatButton';
 import AuthTitle from '../ui/AuthTitle';
 
 const AuthContent = ({ isLogin }) => {
+  const navigation = useNavigation();
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     email: false,
     name: false,
@@ -13,16 +15,18 @@ const AuthContent = ({ isLogin }) => {
   });
 
   const switchAuthModeHandler = () => {
-    //Todo
-    //om isloged in navigera till login annars signin
-    //Gö detta senare
+    if (isLogin) {
+      navigation.navigate("Signup");
+    } else {
+      navigation.navigate("Login");
+    }
   };
 
   /* Submithandler here */
 
   return (
     <View style={styles.page}>
-    <AuthTitle title={isLogin ? "Log In" : "Sign in"} />
+      <AuthTitle title={isLogin ? "Log In" : "Sign in"} />
       <AuthForm
         isLogin={isLogin}
       />
