@@ -3,13 +3,13 @@ import { View, StyleSheet, Text } from 'react-native';
 
 import AuthForm from './AuthForm';
 import FlatButton from '../ui/FlatButton';
+import AuthTitle from '../ui/AuthTitle';
 
 const AuthContent = ({ isLogin }) => {
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     email: false,
     name: false,
     password: false,
-    confirmPassword: false
   });
 
   const switchAuthModeHandler = () => {
@@ -18,15 +18,17 @@ const AuthContent = ({ isLogin }) => {
     //Gö detta senare
   };
 
+  /* Submithandler here */
+
   return (
     <View style={styles.page}>
+    <AuthTitle title={isLogin ? "Log In" : "Sign in"} />
       <AuthForm
         isLogin={isLogin}
       />
       <View>
         <Text> Need to make an account?</Text>
-        <FlatButton onPress={switchAuthModeHandler} > 
-        {/* isLogin har ej skickat */}
+        <FlatButton onPress={switchAuthModeHandler} >
           {isLogin ? "Sign Up here" : "Go to login"}
         </FlatButton>
       </View>
