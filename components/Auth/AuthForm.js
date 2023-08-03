@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import Button from '../ui/Button';
 import Input from './Input';
 
-const AuthForm = ({ credentialsInvalid, isLogin }) => {
+const AuthForm = ({ credentialsInvalid, isLogin, onSubmit }) => {
   const [enteredEmail, setEnteredEmail] = useState('');
   const [enteredName, setEnteredName] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
@@ -23,6 +23,15 @@ const AuthForm = ({ credentialsInvalid, isLogin }) => {
     }
   };
 
+  const submitHandler = () => {
+    onSubmit({
+      email: enteredEmail,
+      name: enteredName,
+      password: enteredPassword,
+    });
+  };
+
+  
   return (
     <View>
       <Input
@@ -32,12 +41,12 @@ const AuthForm = ({ credentialsInvalid, isLogin }) => {
         keyboardType={'email-address'}
       />
       {!isLogin && (
-      <Input
-        placeholder="Name"
-        value={enteredName}
-        onUpdateValue={updateInputValueHandler.bind(this, 'name')}
-        keyboardType={'default'}
-      />
+        <Input
+          placeholder="Name"
+          value={enteredName}
+          onUpdateValue={updateInputValueHandler.bind(this, 'name')}
+          keyboardType={'default'}
+        />
       )}
       <Input
         placeholder="Password"
@@ -47,8 +56,7 @@ const AuthForm = ({ credentialsInvalid, isLogin }) => {
       />
 
       <View>
-      <Button>
-          {/*Krävs function här också */}
+        <Button onPress={submitHandler}>
           {isLogin ? "Log In" : "Sign Up"}
         </Button>
       </View>

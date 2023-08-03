@@ -6,7 +6,7 @@ import AuthForm from './AuthForm';
 import FlatButton from '../ui/FlatButton';
 import AuthTitle from '../ui/AuthTitle';
 
-const AuthContent = ({ isLogin }) => {
+const AuthContent = ({ isLogin, onAuthenticate }) => {
   const navigation = useNavigation();
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     email: false,
@@ -22,13 +22,21 @@ const AuthContent = ({ isLogin }) => {
     }
   };
 
-  /* Submithandler here */
+  const submitHandler = (credentials) => {
+    let { email, name, password } = credentials
+
+    /* sätt mer krav på de andra också */
+    /* lägg till Alert ifall det inte stämmer, används setcredentials */
+    onAuthenticate({ email, password });
+  };
+
 
   return (
     <View style={styles.page}>
       <AuthTitle title={isLogin ? "Log In" : "Sign in"} />
       <AuthForm
         isLogin={isLogin}
+        onSubmit={submitHandler}
       />
       <View>
         <Text> Need to make an account?</Text>

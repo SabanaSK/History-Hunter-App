@@ -1,8 +1,11 @@
 import { Pressable, Text, StyleSheet } from 'react-native';
 
-const Button = ({ children }) => {
+const Button = ({ children, onPress }) => {
   return (
-    <Pressable style={styles.button}>
+    <Pressable
+      style={styles.button}
+      onPress={onPress}
+    >
       <Text style={styles.text}>{children}</Text>
     </Pressable>
   );
