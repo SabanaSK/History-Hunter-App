@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { TextInput, StyleSheet } from 'react-native';
 
 import { Colors } from '../../constants/styles';
 
@@ -9,16 +9,14 @@ const Input = ({
   onUpdateValue
 }) => {
   return (
-    <View>
-      <TextInput
-        style={styles.textInput}
-        placeholder={placeholder}
-        onChangeText={onUpdateValue}
-        value={value}
-        keyboardType={keyboardType}
+    <TextInput
+      style={styles.textInput}
+      placeholder={placeholder}
+      onChangeText={onUpdateValue}
+      value={value}
+      keyboardType={keyboardType}
 
-      />
-    </View>
+    />
   );
 }
 

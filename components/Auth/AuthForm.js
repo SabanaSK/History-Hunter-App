@@ -31,27 +31,27 @@ const AuthForm = ({ credentialsInvalid, isLogin, onSubmit }) => {
     });
   };
 
-  
+
   return (
     <View>
       <Input
         placeholder="Email"
         value={enteredEmail}
-        onUpdateValue={updateInputValueHandler.bind(this, 'email')}
+        onUpdateValue={setEnteredEmail}
         keyboardType={'email-address'}
       />
-      {!isLogin && (
+      {/*    {!isLogin && (
         <Input
           placeholder="Name"
           value={enteredName}
-          onUpdateValue={updateInputValueHandler.bind(this, 'name')}
+          onUpdateValue={setEnteredName}
           keyboardType={'default'}
         />
-      )}
+      )} */}
       <Input
         placeholder="Password"
         value={enteredPassword}
-        onUpdateValue={updateInputValueHandler.bind(this, 'password')}
+        onUpdateValue={setEnteredPassword}
         keyboardType={'default'}
       />
 

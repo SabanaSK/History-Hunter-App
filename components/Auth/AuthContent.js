@@ -22,9 +22,7 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
     }
   };
 
-  const submitHandler = (credentials) => {
-    let { email, name, password } = credentials
-
+  const submitHandler = ({ email, password }) => {
     /* sätt mer krav på de andra också */
     /* lägg till Alert ifall det inte stämmer, används setcredentials */
     onAuthenticate({ email, password });
@@ -40,7 +38,7 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
       />
       <View>
         <Text> Need to make an account?</Text>
-        <FlatButton onPress={switchAuthModeHandler} >
+        <FlatButton onPress={switchAuthModeHandler}>
           {isLogin ? "Sign Up here" : "Go to login"}
         </FlatButton>
       </View>
