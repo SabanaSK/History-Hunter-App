@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import LoadingOverlay from "../components/ui/LoadingOverlay";
 import AuthContent from "../components/Auth/AuthContent";
 import * as http from "../util/http";
 
@@ -11,10 +12,9 @@ const SignupScreen = () => {
     await http.signupUser(email, password);
     setIsAuthenticating(false);
   }
-
-  /* Här sätt krav på om det är isAuthenticating vad ska den visa */
-  /* Om det är !isAuthenticating vad som ska visa? */
-
+  if (isAuthenticating){
+    return <LoadingOverlay message={"User is Creating..."}/>;
+  }
 
   return <AuthContent onAuthenticate={authenticationHandler} />;
 };
