@@ -10,8 +10,14 @@ const LoginScreen = () => {
 
   const authenticationHandler = async ({ email, password }) => {
     setIsAuthenticating(true);
-    const data = await http.signinUser(email, password);
-    console.log("data:", data)
+    try {
+      const data = await http.signinUser(email, password);
+      console.log("data:", data)
+    } catch (error) {
+      console.log(JSON.stringify(error))
+      alert("Wrong email or password")
+      /* Här kan lägga till olika hantering för olika error. Ex 400 wller 401 */
+    }
     setIsAuthenticating(false);
   }
   if (isAuthenticating) {

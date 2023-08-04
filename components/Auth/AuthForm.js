@@ -9,6 +9,11 @@ const AuthForm = ({ credentialsInvalid, isLogin, onSubmit }) => {
   const [enteredName, setEnteredName] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
 
+  const {
+    email: emailIsInvalid,
+    password: passwordIsInvalid,
+  } = credentialsInvalid;
+
   const updateInputValueHandler = (inputType, entertedValue) => {
     switch (inputType) {
       case 'email':
@@ -39,6 +44,7 @@ const AuthForm = ({ credentialsInvalid, isLogin, onSubmit }) => {
         value={enteredEmail}
         onUpdateValue={setEnteredEmail}
         keyboardType={'email-address'}
+        isInvalid={emailIsInvalid}
       />
       {/*    {!isLogin && (
         <Input
@@ -53,6 +59,7 @@ const AuthForm = ({ credentialsInvalid, isLogin, onSubmit }) => {
         value={enteredPassword}
         onUpdateValue={setEnteredPassword}
         keyboardType={'default'}
+        isInvalid={passwordIsInvalid}
       />
 
       <View>

@@ -22,9 +22,27 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
     }
   };
 
-  const submitHandler = ({ email, password }) => {
-    /* sätt mer krav på de andra också */
-    /* lägg till Alert ifall det inte stämmer, används setcredentials */
+  const submitHandler = (credentials) => {
+    let { email, password } = credentials;
+
+    email = email.trim();
+    password = password.trim();
+
+    const emailIsValid = email.includes("@");
+    const passwordIsValid = password.length > 6;
+
+    if (
+      !emailIsValid ||
+      !passwordIsValid
+    ) {
+      Alert.alert("Invalid input", "Please check your entered credentials.");
+      setCredentialsInvalid({
+        email: !emailIsValid,
+        password: !passwordIsValid,
+
+      });
+      return;
+    }
     onAuthenticate({ email, password });
   };
 
@@ -35,6 +53,7 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
       <AuthForm
         isLogin={isLogin}
         onSubmit={submitHandler}
+        credentialsInvalid={credentialsInvalid}
       />
       <View>
         <Text> Need to make an account?</Text>
