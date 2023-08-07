@@ -11,17 +11,17 @@ const authenticate = async (mode, email, password) => {
       returnSecureToken: true,
     }
   );
-  return res.data;
+  return res.data.idToken;
 
 };
 
 
-export const signupUser = async (email, password) => {
-  return await authenticate("signUp", email, password);
+export const signupUser = (email, password) => {
+  return authenticate("signUp", email, password);
 
 };
 
-export const signinUser = async (email, password) => {
-  return await authenticate("signInWithPassword", email, password);
+export const signinUser = (email, password) => {
+  return authenticate("signInWithPassword", email, password);
 
 };
