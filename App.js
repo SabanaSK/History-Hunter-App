@@ -1,13 +1,15 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useContext, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
 import StartScreen from "./screens/StartScreen";
+import CreateScreen from "./screens/CreateScreen";
 import AuthContextProvider, { AuthContext } from "./store/AuthContext";
-import { useContext, useEffect } from "react";
 import IconButton from "./components/ui/IconButton";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +36,7 @@ const AuthenticatedStack = () => {
 
     >
       <Stack.Screen name="Start" component={StartScreen} />
+      <Stack.Screen name="Create Hunt" component={CreateScreen} />
     </Stack.Navigator>
   );
 };
@@ -52,6 +55,7 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       {authCtx.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
+
     </NavigationContainer>
 
   );

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { View } from 'react-native';
 
 import Button from '../ui/Button';
-import Input from './Input';
+import AuthInput from './AuthInput';
 
 const AuthForm = ({ credentialsInvalid, isLogin, onSubmit }) => {
   const [enteredEmail, setEnteredEmail] = useState('');
@@ -39,7 +39,7 @@ const AuthForm = ({ credentialsInvalid, isLogin, onSubmit }) => {
 
   return (
     <View>
-      <Input
+      <AuthInput
         placeholder="Email"
         value={enteredEmail}
         onUpdateValue={setEnteredEmail}
@@ -54,7 +54,7 @@ const AuthForm = ({ credentialsInvalid, isLogin, onSubmit }) => {
           keyboardType={'default'}
         />
       )} */}
-      <Input
+      <AuthInput
         placeholder="Password"
         value={enteredPassword}
         onUpdateValue={setEnteredPassword}

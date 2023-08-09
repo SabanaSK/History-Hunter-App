@@ -2,7 +2,7 @@ import { TextInput, StyleSheet } from 'react-native';
 
 import { Colors } from '../../constants/styles';
 
-const Input = ({
+const AuthInput = ({
   value,
   placeholder,
   keyboardType,
@@ -31,4 +31,4 @@ const styles = StyleSheet.create({
     width: 200
   }
 });
-export default Input;
+export default AuthInput;

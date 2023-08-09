@@ -1,26 +1,18 @@
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { AuthContext } from "../store/AuthContext";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 
-const StartScreen = () => {
-  const [message, setMessage] = useState(null)
-  const authCtx = useContext(AuthContext);
-  
-  useEffect(() => {
-    axios.get("https://auth-app-ab7aa-default-rtdb.europe-west1.firebasedatabase.app/test.json?auth=" + 
-    authCtx.token 
-    ).then(res => {
-      setMessage(res.data);
-      console.log(res);
-    });
-  },[]);
+
+const StartScreen = ({ navigation }) => {
 
   return (
     <View style={styles.rootContainer}>
       <Text style={styles.title}>Welcome!</Text>
       <Text>You authenticated successfully!</Text>
-      <Text>Message from server: {message}</Text>
+      <View>
+        {/* Alternative används button här nere */}
+        <Pressable onPress={() => navigation.navigate('Create Hunt')}>
+          <Text>Create Hunt</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
