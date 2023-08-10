@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 
+import PlacesList from "../components/places/PlacesList";
 
 const StartScreen = ({ navigation }) => {
 
@@ -7,6 +8,7 @@ const StartScreen = ({ navigation }) => {
     <View style={styles.rootContainer}>
       <Text style={styles.title}>Welcome!</Text>
       <Text>You authenticated successfully!</Text>
+        <PlacesList/>
       <View>
         {/* Alternative används button här nere */}
         <Pressable onPress={() => navigation.navigate('Create Hunt')}>

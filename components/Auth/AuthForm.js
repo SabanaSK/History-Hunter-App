@@ -46,14 +46,14 @@ const AuthForm = ({ credentialsInvalid, isLogin, onSubmit }) => {
         keyboardType={'email-address'}
         isInvalid={emailIsInvalid}
       />
-      {/*    {!isLogin && (
-        <Input
+         {!isLogin && (
+        <AuthInput
           placeholder="Name"
           value={enteredName}
           onUpdateValue={setEnteredName}
           keyboardType={'default'}
         />
-      )} */}
+      )}
       <AuthInput
         placeholder="Password"
         value={enteredPassword}
