@@ -64,6 +64,7 @@ const Navigation = () => {
 export default function App() {
   return (
     <>
+    {/* Man kan lägga till mer context här */}
       <AuthContextProvider>
         <Navigation />
       </AuthContextProvider>

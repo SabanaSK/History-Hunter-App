@@ -16,10 +16,19 @@ const authenticate = async (mode, email, password) => {
 };
 
 
-export const signupUser = (email, password) => {
-  return authenticate("signUp", email, password);
+export const signupUser = async (email, password, name) => {
+  try {
+    const token = await authenticate("signUp", email, password);
+    const url = `https://auth-app-ab7aa-default-rtdb.europe-west1.firebasedatabase.app/users.json?auth=${token}`;
+    await axios.post(url, { name });
 
+    return token;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
+
 
 export const signinUser = (email, password) => {
   return authenticate("signInWithPassword", email, password);

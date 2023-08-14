@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import AuthForm from './AuthForm';
@@ -23,27 +23,28 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
   };
 
   const submitHandler = (credentials) => {
-    let { email, password } = credentials;
+    let { email, name, password } = credentials;
 
     email = email.trim();
     password = password.trim();
 
     const emailIsValid = email.includes("@");
     const passwordIsValid = password.length > 6;
-
+    const nameIsValid = name.length < 10
     if (
       !emailIsValid ||
-      !passwordIsValid
+      !passwordIsValid ||
+      !nameIsValid
     ) {
       Alert.alert("Invalid input", "Please check your entered credentials.");
       setCredentialsInvalid({
         email: !emailIsValid,
         password: !passwordIsValid,
-
+        name: !nameIsValid,
       });
       return;
     }
-    onAuthenticate({ email, password });
+    onAuthenticate({ email, password, name });
   };
 
 

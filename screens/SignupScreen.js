@@ -10,10 +10,10 @@ const SignupScreen = () => {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const authCtx = useContext(AuthContext)
 
-  const authenticationHandler = async ({ email, password }) => {
+  const authenticationHandler = async ({ email, password, name }) => {
     setIsAuthenticating(true);
     try {
-      const token = await http.signupUser(email, password);
+      const token = await http.signupUser(email, password, name);
       authCtx.authenticate(token);
 
     } catch (error) {

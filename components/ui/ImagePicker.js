@@ -1,4 +1,4 @@
-import { View, Dimensions, StyleSheet, Text, Image } from "react-native"
+import { View, Dimensions, StyleSheet, Text, Image, Button } from "react-native"
 import { Camera, CameraType } from "expo-camera";
 import { useRef, useState } from "react";
 import IconButton from "./IconButton";
@@ -6,11 +6,27 @@ import IconButton from "./IconButton";
 const ImagePicker = () => {
   const cameraRef = useRef();
   const [photo, setPhoto] = useState();
+  const [permission, reqPermission] = Camera.useCameraPermissions();
+
+  if (!permission) {
+    // Camera permissions are still loading
+    return <View />;
+  }
+
+  if (!permission.granted) {
+    // Camera permissions are not granted yet
+    return (
+      <View style={styles.container}>
+        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
+        <Button onPress={reqPermission} title="grant permission" />
+      </View>
+    );
+  }
 
   const takePicture = async () => {
-    
+
     if (cameraRef.current) {
-      
+
       const takenPhoto = await cameraRef.current.takePictureAsync({
         quality: 0.7,
         exif: false,

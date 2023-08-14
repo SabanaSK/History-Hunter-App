@@ -14,16 +14,16 @@ const AuthForm = ({ credentialsInvalid, isLogin, onSubmit }) => {
     password: passwordIsInvalid,
   } = credentialsInvalid;
 
-  const updateInputValueHandler = (inputType, entertedValue) => {
+  const updateInputValueHandler = (inputType, enteredValue) => {
     switch (inputType) {
       case 'email':
-        setEnteredEmail(entertedValue);
+        setEnteredEmail(enteredValue);
         break;
       case 'name':
-        setEnteredName(entertedValue);
+        setEnteredName(enteredValue);
         break;
       case 'password':
-        setEnteredPassword(entertedValue);
+        setEnteredPassword(enteredValue);
         break;
     }
   };
@@ -46,7 +46,7 @@ const AuthForm = ({ credentialsInvalid, isLogin, onSubmit }) => {
         keyboardType={'email-address'}
         isInvalid={emailIsInvalid}
       />
-         {!isLogin && (
+      {!isLogin && (
         <AuthInput
           placeholder="Name"
           value={enteredName}

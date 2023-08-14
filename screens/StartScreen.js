@@ -8,7 +8,7 @@ const StartScreen = ({ navigation }) => {
     <View style={styles.rootContainer}>
       <Text style={styles.title}>Welcome!</Text>
       <Text>You authenticated successfully!</Text>
-        <PlacesList/>
+      <PlacesList />
       <View>
         {/* Alternative används button här nere */}
         <Pressable onPress={() => navigation.navigate('Create Hunt')}>
