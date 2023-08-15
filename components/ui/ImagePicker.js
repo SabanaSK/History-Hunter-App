@@ -34,11 +34,13 @@ const ImagePicker = () => {
       console.log(takenPhoto)
       setPhoto(takenPhoto);
     };
+
   };
 
-  let previewContent = <Text>No image taken yet</Text>
+  let previewContent = <Text style={styles.text}>No image taken yet</Text>
+
   if (photo) {
-    previewContent = <Image source={{ uri: photo.uri }} />
+    previewContent = <Image source={{ uri: photo.uri }} style={styles.photo} />
   }
 
   return (
@@ -56,7 +58,7 @@ const ImagePicker = () => {
           onPress={takePicture}
         />
       </Camera>
-      <View style={styles.preview}></View>
+      <View style={styles.preview}>{previewContent}</View>
     </View>
   )
 }
@@ -76,11 +78,18 @@ const styles = StyleSheet.create({
   preview: {
     width: width,
     height: height / 2,
-    backgroundColor: "blue",
+    backgroundColor: "#FFF8B4",
     marginVertical: 8,
     justifyContent: "center",
     alignItems: "center",
 
+  },
+  text: {
+    color: "black",
+  },
+  photo: {
+    width: "100%",
+    height: "100%",
   }
 
 });
