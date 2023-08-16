@@ -1,7 +1,7 @@
 import { View, Dimensions, StyleSheet, Text, Image, Button } from "react-native"
 import { Camera, CameraType } from "expo-camera";
 import { useRef, useState } from "react";
-import IconButton from "./IconButton";
+import IconButton from "../ui/IconButton";
 
 const ImagePicker = () => {
   const cameraRef = useRef();

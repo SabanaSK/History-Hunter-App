@@ -32,6 +32,12 @@
         {
           "cameraPermission": "You need to grant permission to acces your camera."
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "You need to grant permission to use your location."
+        }
       ]
     ]
   }

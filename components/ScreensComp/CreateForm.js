@@ -1,6 +1,7 @@
 import { ScrollView, TextInput, View, Text } from "react-native"
 
-import ImagePicker from "../ui/ImagePicker";
+import ImagePicker from "./ImagePicker";
+import LocationPicker from "../places/LocationPicker";
 
 const CreateForm = () => {
   return (
@@ -9,7 +10,8 @@ const CreateForm = () => {
         <Text>Title</Text>
         <TextInput />
       </View>
-      <ImagePicker/>
+      <ImagePicker />
+      <LocationPicker />
     </ScrollView>
   )
 };
