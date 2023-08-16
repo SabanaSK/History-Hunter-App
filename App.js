@@ -7,6 +7,7 @@ import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
 import StartScreen from "./screens/StartScreen";
 import CreateScreen from "./screens/CreateScreen";
+import MapScreen from "./screens/MapScreen";
 import AuthContextProvider, { AuthContext } from "./store/AuthContext";
 import IconButton from "./components/ui/IconButton";
 
@@ -37,6 +38,7 @@ const AuthenticatedStack = () => {
     >
       <Stack.Screen name="Start" component={StartScreen} />
       <Stack.Screen name="Create Hunt" component={CreateScreen} />
+      <Stack.Screen name="Map" component={MapScreen} />
     </Stack.Navigator>
   );
 };
@@ -64,7 +66,7 @@ const Navigation = () => {
 export default function App() {
   return (
     <>
-    {/* Man kan lägga till mer context här */}
+      {/* Man kan lägga till mer context här */}
       <AuthContextProvider>
         <Navigation />
       </AuthContextProvider>
