@@ -8,6 +8,7 @@ import SignupScreen from "./screens/SignupScreen";
 import StartScreen from "./screens/StartScreen";
 import CreateScreen from "./screens/CreateScreen";
 import MapScreen from "./screens/MapScreen";
+import AddPlaceScreen from "./screens/AddPlaceScreen";
 import AuthContextProvider, { AuthContext } from "./store/AuthContext";
 import IconButton from "./components/ui/IconButton";
 
@@ -29,10 +30,11 @@ const AuthenticatedStack = () => {
       <Stack.Screen name="Start" component={StartScreen} />
       <Stack.Screen name="Create Hunt" component={CreateScreen} />
       <Stack.Screen name="Map" component={MapScreen} />
+      <Stack.Screen name="AddPlace" component={AddPlaceScreen} />
     </Stack.Navigator>
   );
 };
-  
+
 const Navigation = () => {
   const authCtx = useContext(AuthContext)
   useEffect(() => {

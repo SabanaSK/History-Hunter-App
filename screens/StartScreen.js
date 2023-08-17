@@ -16,7 +16,9 @@ navigation.setOptions({
   size={30}
   onPress={authCtx.logout} />
 })
-}, [])
+}, [authCtx, navigation])
+
+
   return (
     <View style={styles.rootContainer}>
       <Text style={styles.title}>Welcome!</Text>
