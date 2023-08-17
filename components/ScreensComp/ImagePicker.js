@@ -3,7 +3,7 @@ import { Camera, CameraType } from "expo-camera";
 import { useRef, useState } from "react";
 import IconButton from "../ui/IconButton";
 
-const ImagePicker = () => {
+const ImagePicker = ({imageHandler}) => {
   const cameraRef = useRef();
   const [photo, setPhoto] = useState();
   const [permission, reqPermission] = Camera.useCameraPermissions();
@@ -31,8 +31,8 @@ const ImagePicker = () => {
         quality: 0.7,
         exif: false,
       });
-      console.log(takenPhoto)
       setPhoto(takenPhoto);
+      imageHandler(takenPhoto.uri);
     };
 
   };

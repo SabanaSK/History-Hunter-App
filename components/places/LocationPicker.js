@@ -1,24 +1,36 @@
 import { View, Text, Button, Image, StyleSheet } from "react-native";
 import * as Location from "expo-location";
-import { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useEffect, useState } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import OutlinedButton from "../ui/OutlinedButton";
 import { createLocationUrl } from "../../util/location";
 
 
-const LocationPicker = () => {
+const LocationPicker = ({ locationHandler }) => {
   const [pickedLocation, setPickedLocation] = useState();
   const [permission, reqPermission] = Location.useForegroundPermissions();
   const navigation = useNavigation();
+  const route = useRoute();
+
+  useEffect(() => {
+    if (route.params) {
+      setPickedLocation({
+        lat: route.params.latitude,
+        lng: route.params.longitude
+      });
+    }
+  }, [route]);
+
+  useEffect(() => {
+    locationHandler(pickedLocation);
+  }, [pickedLocation, locationHandler]);
 
   if (!permission) {
-    // Camera permissions are still loading
     return <View />;
   }
 
   if (!permission.granted) {
-    // Camera permissions are not granted yet
     return (
       <View >
         <Text >We need your permission to locate your location</Text>
@@ -35,10 +47,10 @@ const LocationPicker = () => {
       lng: location.coords.longitude,
     })
   };
+
   const pickOnMapHandler = () => {
     navigation.navigate("Map");
   };
-
 
   let previewContent = <Text>No picked location yet</Text>
   if (pickedLocation) {
