@@ -24,25 +24,15 @@ const AuthStack = () => {
 };
 
 const AuthenticatedStack = () => {
-  const authCtx = useContext(AuthContext)
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerRight: () =>
-          <IconButton
-            icon="logout"
-            size={30}
-            onPress={authCtx.logout} />
-      }}
-
-    >
+    <Stack.Navigator>
       <Stack.Screen name="Start" component={StartScreen} />
       <Stack.Screen name="Create Hunt" component={CreateScreen} />
       <Stack.Screen name="Map" component={MapScreen} />
     </Stack.Navigator>
   );
 };
-
+  
 const Navigation = () => {
   const authCtx = useContext(AuthContext)
   useEffect(() => {

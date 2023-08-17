@@ -1,9 +1,27 @@
 import MapView, { Marker } from 'react-native-maps';
 import { StyleSheet } from 'react-native';
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
-const MapScreen = () => {
+import IconButton from '../components/ui/IconButton';
+
+const MapScreen = ({ navigation }) => {
   const [pickedLocation, setPickedLocation] = useState();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () =>
+        <IconButton
+          icon="save"
+          size={24}
+          color="black" />
+    })
+  }, []);
+
+  const pressHandler = (event) => {
+    const latitude = event.nativeEvent.coordinate.latitude;
+    const longitude = event.nativeEvent.coordinate.longitude;
+    setPickedLocation({ latitude, longitude });
+  };
 
   const initialRegion = {
     latitude: 57.708870,
@@ -12,15 +30,10 @@ const MapScreen = () => {
     longitudeDelta: 0.421,
   };
 
-  const pressHandler = (event) => {
-    const latitude = event.nativeEvent.coordinate.latitude;
-    const longitude = event.nativeEvent.coordinate.longitude;
-    console.log(latitude, longitude);
-    setPickedLocation({ latitude, longitude });
-  };
+
   return (
     <MapView style={styles.container} initialRegion={initialRegion} onPress={pressHandler}>
-      {pickedLocation && <Marker coordinate={pickedLocation} />}
+      {pickedLocation && (<Marker coordinate={pickedLocation} />)}
     </MapView>
   )
 };
