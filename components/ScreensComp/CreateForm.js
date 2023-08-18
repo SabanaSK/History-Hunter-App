@@ -4,8 +4,9 @@ import { useCallback, useState } from "react";
 import ImagePicker from "./ImagePicker";
 import LocationPicker from "../places/LocationPicker";
 import Button from "../ui/Button";
+import Place from "../../models/Place";
 
-const CreateForm = () => {
+const CreateForm = ({ addPlaceHandler }) => {
 
   const [title, setTitle] = useState();
   const [image, setImage] = useState();
@@ -19,14 +20,16 @@ const CreateForm = () => {
     setImage(uri);
   };
 
-  const locationHandler = useCallback((coords) => {
-    setLocation(coords);
+  const locationHandler = useCallback((locationInfo) => {
+    setLocation(locationInfo);
   }, []);
 
 
   const submitHandler = () => {
-    console.log(title, image, location);
+    const place = new Place(title, image, location);
+    addPlaceHandler(place);
   };
+
   return (
     <ScrollView>
       <View>

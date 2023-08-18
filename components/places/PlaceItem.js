@@ -1,17 +1,19 @@
-import { View, Text } from "react-native"
+import { View, Text, Pressable, Image } from "react-native"
 
 const PlaceItem = ({ place, pressHandler }) => {
   return (
-    <View>
-      <Image source={{ uri: place.imageUri }} />
+    <Pressable onPress={pressHandler}>
       <View>
-        <Text>{place.title}</Text>
-        <Text>{place.address}</Text>
+        <Image source={{ uri: place.imageUri }} />
+        <View>
+          <Text>{place.title}</Text>
+          <Text>{place.address}</Text>
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 
-  
+
 };
 
 export default PlaceItem;

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 import OutlinedButton from "../ui/OutlinedButton";
-import { createLocationUrl } from "../../util/location";
+import { createLocationUrl, getReadableAddress } from "../../util/location";
 
 
 const LocationPicker = ({ locationHandler }) => {
@@ -23,7 +23,13 @@ const LocationPicker = ({ locationHandler }) => {
   }, [route]);
 
   useEffect(() => {
-    locationHandler(pickedLocation);
+    const getLocationDetails = async () => {
+      if (pickedLocation) {
+        const address = await getReadableAddress(pickedLocation);
+        locationHandler({ ...pickedLocation, address });
+      };
+    };
+    getLocationDetails();
   }, [pickedLocation, locationHandler]);
 
   if (!permission) {
