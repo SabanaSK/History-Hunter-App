@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
-import { useContext, useLayoutEffect } from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useRoute } from "@react-navigation/native";
 
 import PlacesList from "../components/places/PlacesList";
@@ -7,10 +7,9 @@ import IconButton from "../components/ui/IconButton";
 import { AuthContext } from "../store/AuthContext";
 
 
-const StartScreen = ({ navigation }) => {
+const StartScreen = ({ navigation, route }) => {
   const authCtx = useContext(AuthContext);
-  const route = useRoute();
-  const places = [];
+  const [places, setPlaces] = useState([]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -23,9 +22,14 @@ const StartScreen = ({ navigation }) => {
   }, [authCtx, navigation]);
 
   console.log("allplace", route.params)
-  if (route.params?.places) {
-    places.push(route.params.places)
-  }
+
+  useEffect(() => {
+    const place = route.params?.places;
+    if (place) {
+      setPlaces((prev) => [...prev, place]);
+    }
+  }, [route]);
+
 
   return (
     <View style={styles.rootContainer}>
