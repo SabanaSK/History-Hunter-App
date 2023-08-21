@@ -10,8 +10,9 @@ const PlacesList = ({ places }) => {
       </View>
     )
   }
+  /* 
+    console.log("Places:", places); */
 
-  console.log("Places:", places);
   return (
     <FlatList
       data={places}

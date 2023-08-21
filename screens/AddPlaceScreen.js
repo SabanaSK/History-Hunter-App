@@ -1,8 +1,10 @@
 import CreateForm from "../components/ScreensComp/CreateForm";
+import { insertPlaceAsync } from "../util/database";
 
 const AddPlaceScreen = ({ navigation }) => {
-  const addPlaceHandler = (place) => {
-    navigation.navigate("Start", { places: place });
+  const addPlaceHandler = async (place) => {
+    await insertPlaceAsync(place)
+    navigation.navigate("Start");
   };
   return <CreateForm addPlaceHandler={addPlaceHandler} />
 };

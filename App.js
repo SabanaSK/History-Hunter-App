@@ -1,7 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SplashScreen from "expo-splash-screen";
 
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
@@ -11,9 +12,11 @@ import MapScreen from "./screens/MapScreen";
 import AddPlaceScreen from "./screens/AddPlaceScreen";
 import AuthContextProvider, { AuthContext } from "./store/AuthContext";
 import IconButton from "./components/ui/IconButton";
+import { initializeDBAsync } from "./util/database";
 
 
 const Stack = createNativeStackNavigator();
+SplashScreen.preventAutoHideAsync();
 
 const AuthStack = () => {
   return (
@@ -25,6 +28,19 @@ const AuthStack = () => {
 };
 
 const AuthenticatedStack = () => {
+
+  useEffect(() => {
+    const initDB = async () => {
+      try {
+        await initializeDBAsync();
+        await SplashScreen.hideAsync();
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    initDB();
+  }, []);
+
   return (
     <Stack.Navigator>
       <Stack.Screen name="Start" component={StartScreen} />
@@ -37,6 +53,7 @@ const AuthenticatedStack = () => {
 
 const Navigation = () => {
   const authCtx = useContext(AuthContext)
+
   useEffect(() => {
     const fetchToken = async () => {
       const token = await AsyncStorage.getItem("appToken");
@@ -46,10 +63,10 @@ const Navigation = () => {
     };
     fetchToken();
   }, [authCtx]);
+
   return (
     <NavigationContainer>
       {authCtx.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
-
     </NavigationContainer>
 
   );

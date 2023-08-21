@@ -1,15 +1,17 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
-import { useRoute } from "@react-navigation/native";
+import { useIsFocused, useRoute } from "@react-navigation/native";
 
 import PlacesList from "../components/places/PlacesList";
 import IconButton from "../components/ui/IconButton";
 import { AuthContext } from "../store/AuthContext";
+import { getAllPlacesAsync } from "../util/database";
 
 
-const StartScreen = ({ navigation, route }) => {
+const StartScreen = ({ navigation }) => {
   const authCtx = useContext(AuthContext);
   const [places, setPlaces] = useState([]);
+  const isFocused = useIsFocused();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -21,14 +23,15 @@ const StartScreen = ({ navigation, route }) => {
     })
   }, [authCtx, navigation]);
 
-  console.log("allplace", route.params)
+  /*   console.log("allplace", route.params) */
 
   useEffect(() => {
-    const place = route.params?.places;
-    if (place) {
-      setPlaces((prev) => [...prev, place]);
-    }
-  }, [route]);
+    const loadPlaces = async () => {
+      const allPlaces = await getAllPlacesAsync();
+      setPlaces(allPlaces);
+    };
+    loadPlaces();
+  }, [isFocused]);
 
 
   return (
