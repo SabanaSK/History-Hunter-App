@@ -7,7 +7,6 @@ import * as SplashScreen from "expo-splash-screen";
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
 import StartScreen from "./screens/StartScreen";
-import CreateScreen from "./screens/CreateScreen";
 import MapScreen from "./screens/MapScreen";
 import AddPlaceScreen from "./screens/AddPlaceScreen";
 import AuthContextProvider, { AuthContext } from "./store/AuthContext";
@@ -44,7 +43,6 @@ const AuthenticatedStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Start" component={StartScreen} />
-      <Stack.Screen name="Create Hunt" component={CreateScreen} />
       <Stack.Screen name="Map" component={MapScreen} />
       <Stack.Screen name="AddPlace" component={AddPlaceScreen} />
     </Stack.Navigator>
