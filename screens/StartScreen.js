@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, View, Pressable, Alert } from "react-native";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useIsFocused, useRoute } from "@react-navigation/native";
 
 import PlacesList from "../components/places/PlacesList";
 import IconButton from "../components/ui/IconButton";
 import { AuthContext } from "../store/AuthContext";
-import { getAllPlacesAsync } from "../util/database";
+import { getAllPlacesAsync, deleteAllPlacesAsync } from "../util/database";
 
 
 const StartScreen = ({ navigation }) => {
@@ -13,14 +13,46 @@ const StartScreen = ({ navigation }) => {
   const [places, setPlaces] = useState([]);
   const isFocused = useIsFocused();
 
+  const handleResetData = async () => {
+    Alert.alert(
+      "Confirm Reset",
+      "Are you sure you want to delete all data?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: async () => {
+            await deleteAllPlacesAsync();
+            const allPlaces = await getAllPlacesAsync();
+            setPlaces(allPlaces);
+          },
+        },
+      ]
+    );
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () =>
+      headerLeft: () => (
+        <IconButton
+          icon="delete-outline" 
+          size={30}
+          onPress={handleResetData} 
+          style={styles.headerLeftIcon}
+        />
+      ),
+      headerRight: () => (
         <IconButton
           icon="logout"
           size={30}
-          onPress={authCtx.logout} />
-    })
+          onPress={authCtx.logout}
+        />
+      ),
+    });
   }, [authCtx, navigation]);
 
   /*   console.log("allplace", route.params) */
