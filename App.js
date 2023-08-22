@@ -10,8 +10,8 @@ import StartScreen from "./screens/StartScreen";
 import MapScreen from "./screens/MapScreen";
 import AddPlaceScreen from "./screens/AddPlaceScreen";
 import AuthContextProvider, { AuthContext } from "./store/AuthContext";
-import IconButton from "./components/ui/IconButton";
-import { initializeDBAsync } from "./util/database";
+import { initializeDBAsync, initializeImagesDBAsync } from "./util/database";
+import EditProfileScreen from "./screens/EditProfileScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -32,6 +32,7 @@ const AuthenticatedStack = () => {
     const initDB = async () => {
       try {
         await initializeDBAsync();
+        await initializeImagesDBAsync();
         await SplashScreen.hideAsync();
       } catch (error) {
         console.error(error);
@@ -45,13 +46,13 @@ const AuthenticatedStack = () => {
       <Stack.Screen name="Start" component={StartScreen} />
       <Stack.Screen name="Map" component={MapScreen} />
       <Stack.Screen name="AddPlace" component={AddPlaceScreen} />
+      <Stack.Screen name="EditProfile" component={EditProfileScreen} />
     </Stack.Navigator>
   );
 };
 
 const Navigation = () => {
   const authCtx = useContext(AuthContext)
-
   useEffect(() => {
     const fetchToken = async () => {
       const token = await AsyncStorage.getItem("appToken");

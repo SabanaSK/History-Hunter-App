@@ -1,17 +1,27 @@
 import { StyleSheet, Text, View, Pressable, Alert } from "react-native";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
-import { useIsFocused, useRoute } from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
+import axios from "axios";
 
 import PlacesList from "../components/places/PlacesList";
 import IconButton from "../components/ui/IconButton";
 import { AuthContext } from "../store/AuthContext";
-import { getAllPlacesAsync, deleteAllPlacesAsync } from "../util/database";
-
+import {
+  getAllPlacesAsync,
+  deleteAllPlacesAsync,
+  getImageUriFromDatabase,
+  deleteAllImagesAsync
+} from "../util/database";
+import AuthProfile from "../components/Auth/AuthProfile";
+import ProfileImage from "../components/ScreensComp/ProfileImage";
 
 const StartScreen = ({ navigation }) => {
   const authCtx = useContext(AuthContext);
   const [places, setPlaces] = useState([]);
   const isFocused = useIsFocused();
+  const [images, setImages] = useState(null);
+
+  console.log("images at start", images)
 
   const handleResetData = async () => {
     Alert.alert(
@@ -27,21 +37,28 @@ const StartScreen = ({ navigation }) => {
           style: "destructive",
           onPress: async () => {
             await deleteAllPlacesAsync();
+            await deleteAllImagesAsync();
+
+            // Reload places
             const allPlaces = await getAllPlacesAsync();
             setPlaces(allPlaces);
+
+            /* KAn lägg refresh for image här om vill */
           },
         },
       ]
     );
   };
 
+
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
         <IconButton
-          icon="delete-outline" 
+          icon="delete-outline"
           size={30}
-          onPress={handleResetData} 
+          onPress={handleResetData}
           style={styles.headerLeftIcon}
         />
       ),
@@ -55,7 +72,6 @@ const StartScreen = ({ navigation }) => {
     });
   }, [authCtx, navigation]);
 
-  /*   console.log("allplace", route.params) */
 
   useEffect(() => {
     const loadPlaces = async () => {
@@ -65,34 +81,67 @@ const StartScreen = ({ navigation }) => {
     loadPlaces();
   }, [isFocused]);
 
+  useEffect(() => {
+    const fetchImageUri = async () => {
+      try {
+        const uri = await getImageUriFromDatabase();
+        setImages(uri);
+        console.log('Image URI fetched:', uri);
+      } catch (error) {
+        console.error('Error fetching image URI:', error);
+      }
+    };
+
+    fetchImageUri();
+  }, [isFocused]); // Adding isFocused to the dependency array
+
 
   return (
     <View style={styles.rootContainer}>
-      <Text style={styles.title}>Welcome!</Text>
-      <Text>You authenticated successfully!</Text>
-      <PlacesList places={places} />
+      <ProfileImage images={images} />
+
       <View>
-        {/* Alternative används button här nere */}
-        <Pressable onPress={() => navigation.navigate('AddPlace')}>
-          <Text>Create Hunt</Text>
+        <Text style={styles.title}>Active Hunt</Text>
+        <PlacesList places={places} />
+      </View>
+      <View>
+        <Text style={styles.title}>Planned Hunt</Text>
+      </View>
+      <View>
+        <Pressable onPress={() => navigation.navigate('AddPlace')}  >
+          <Text style={styles.createHunt}>Create Hunt</Text>
         </Pressable>
+      </View>
+      <View>
+        <Text style={styles.medals}>MEDALS</Text>
       </View>
     </View>
   );
 };
 
+
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 32,
+    padding: 30,
   },
   title: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: "bold",
     marginBottom: 8,
+    marginTop: 30,
   },
+  createHunt: {
+    fontSize: 16,
+    fontWeight: "bold",
+    padding: 20,
+    textAlign: "center",
+  },
+  medals: {
+    textAlign: "center",
+    fontSize: 20,
+    color: "blue",
+  }
 });
 
 export default StartScreen;
