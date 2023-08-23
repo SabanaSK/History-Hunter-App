@@ -11,7 +11,7 @@ import {
   getImageUriFromDatabase,
   deleteAllImagesAsync
 } from "../util/database";
-import AuthProfile from "../components/Auth/AuthProfile";
+import AuthProfile from "../components/Auth/AuthUserName";
 import ProfileImage from "../components/ScreensComp/ProfileImage";
 
 const StartScreen = ({ navigation }) => {
@@ -20,7 +20,7 @@ const StartScreen = ({ navigation }) => {
   const isFocused = useIsFocused();
   const [images, setImages] = useState(null);
 
-  /* console.log("images at start", images) */
+ 
 
   const handleResetData = async () => {
     Alert.alert(
@@ -85,7 +85,7 @@ const StartScreen = ({ navigation }) => {
       try {
         const uri = await getImageUriFromDatabase();
         setImages(uri);
-        /* console.log('Image URI fetched:', uri); */
+       
       } catch (error) {
         console.error('Error fetching image URI:', error);
       }

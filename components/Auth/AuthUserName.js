@@ -4,13 +4,12 @@ import { View, Text } from "react-native";
 
 import { AuthContext } from "../../store/AuthContext";
 
-const AuthProfile = () => {
+const AuthUserName = () => {
   const authCtx = useContext(AuthContext);
   const token = authCtx.token;
   const uid = authCtx.uid;
   const [userName, setUserName] = useState(null);
 
-  console.log("uid", uid)
   useEffect(() => {
     if (uid && token) {
       const url = `https://auth-app-ab7aa-default-rtdb.europe-west1.firebasedatabase.app/users.json?auth=${token}`;
@@ -29,8 +28,6 @@ const AuthProfile = () => {
 
 
 
-  console.log("userName", userName)
-
   return (
     <View>
 
@@ -40,4 +37,4 @@ const AuthProfile = () => {
   );
 };
 
-export default AuthProfile;
+export default AuthUserName;
