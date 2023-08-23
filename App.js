@@ -2,7 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as SplashScreen from "expo-splash-screen";
+//import * as SplashScreen from "expo-splash-screen";
 
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
@@ -15,8 +15,7 @@ import EditProfileScreen from "./screens/EditProfileScreen";
 
 
 const Stack = createNativeStackNavigator();
-SplashScreen.preventAutoHideAsync();
-
+//SplashScreen.preventAutoHideAsync();
 const AuthStack = () => {
   return (
     <Stack.Navigator>
@@ -33,7 +32,7 @@ const AuthenticatedStack = () => {
       try {
         await initializeDBAsync();
         await initializeImagesDBAsync();
-        await SplashScreen.hideAsync();
+        //await SplashScreen.hideAsync();
       } catch (error) {
         console.error(error);
       }
@@ -56,10 +55,12 @@ const Navigation = () => {
   useEffect(() => {
     const fetchToken = async () => {
       const token = await AsyncStorage.getItem("appToken");
-      if (token) {
-        authCtx.authenticate(token)
+      const uid = await AsyncStorage.getItem("appUid");
+      if (token && uid) {
+        authCtx.authenticate(token, uid);
       };
     };
+
     fetchToken();
   }, [authCtx]);
 
@@ -74,7 +75,6 @@ const Navigation = () => {
 export default function App() {
   return (
     <>
-      {/* Man kan lägga till mer context här */}
       <AuthContextProvider>
         <Navigation />
       </AuthContextProvider>

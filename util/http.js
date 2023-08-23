@@ -11,18 +11,22 @@ const authenticate = async (mode, email, password) => {
       returnSecureToken: true,
     }
   );
-  return res.data.idToken;
+  console.log("Response data:", res.data);
+  return {
+    token: res.data.idToken,
+    uid: res.data.localId,
+  }
 
 };
 
 
 export const signupUser = async (email, password, name) => {
   try {
-    const token = await authenticate("signUp", email, password);
-    const url = `https://auth-app-ab7aa-default-rtdb.europe-west1.firebasedatabase.app/users.json?auth=${token}`;
+    const { token, uid } = await authenticate("signUp", email, password);
+    const url = `https://auth-app-ab7aa-default-rtdb.europe-west1.firebasedatabase.app/users/${uid}.json?auth=${token}`;
     await axios.post(url, { name });
 
-    return token;
+    return { token, uid };
   } catch (error) {
     console.error(error);
     throw error;

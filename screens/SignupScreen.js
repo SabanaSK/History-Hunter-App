@@ -13,8 +13,8 @@ const SignupScreen = () => {
   const authenticationHandler = async ({ email, password, name }) => {
     setIsAuthenticating(true);
     try {
-      const token = await http.signupUser(email, password, name);
-      authCtx.authenticate(token);
+      const { token, uid } = await http.signupUser(email, password, name);
+      authCtx.authenticate(token, uid);
 
     } catch (error) {
       console.log(JSON.stringify(error))

@@ -6,38 +6,36 @@ import { AuthContext } from "../../store/AuthContext";
 
 const AuthProfile = () => {
   const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
+  const uid = authCtx.uid;
   const [userName, setUserName] = useState(null);
-  const [pushID, setPushID] = useState(null);
+
+  console.log("uid", uid)
   useEffect(() => {
-    const url =
-      "https://auth-app-ab7aa-default-rtdb.europe-west1.firebasedatabase.app/users.json?auth=" +
-      authCtx.token;
+    if (uid && token) {
+      const url = `https://auth-app-ab7aa-default-rtdb.europe-west1.firebasedatabase.app/users.json?auth=${token}`;
 
-    axios
-      .get(url)
-      .then((resp) => {
-        const data = resp.data;
-        const pushIds = Object.keys(resp.data);
-        setPushID(pushIds);
-        console.log(pushID);
-        for (const key in data) {
-          if (data[key].token === authCtx.token) {
-            
-            setUserName(data[key].name);
-            break;
-          }
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-  }, []);
+      axios
+        .get(url)
+        .then((resp) => {
+          const data = resp.data[uid][Object.keys(resp.data[uid])[0]].name;
+          setUserName(data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [uid, token]);
 
 
+
+  console.log("userName", userName)
 
   return (
     <View>
-      <Text>{userName}</Text>
+
+      <Text>{userName ? userName : 'No userName'}</Text>
+
     </View>
   );
 };
