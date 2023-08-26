@@ -12,6 +12,7 @@ const AuthForm = ({ credentialsInvalid, isLogin, onSubmit }) => {
   const {
     email: emailIsInvalid,
     password: passwordIsInvalid,
+    displayName: displayNameIsInvalid,
   } = credentialsInvalid;
 
   const updateInputValueHandler = (inputType, enteredValue) => {
@@ -31,7 +32,7 @@ const AuthForm = ({ credentialsInvalid, isLogin, onSubmit }) => {
   const submitHandler = () => {
     onSubmit({
       email: enteredEmail,
-      name: enteredName,
+      displayName: enteredName,
       password: enteredPassword,
     });
   };
@@ -50,6 +51,7 @@ const AuthForm = ({ credentialsInvalid, isLogin, onSubmit }) => {
         <AuthInput
           placeholder="Name"
           value={enteredName}
+          isInvalid={displayNameIsInvalid}
           onUpdateValue={setEnteredName}
           keyboardType={'default'}
         />

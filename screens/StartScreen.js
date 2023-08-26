@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Pressable, Alert } from "react-native";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
+import axios from "axios";
 
 import PlacesList from "../components/places/PlacesList";
 import IconButton from "../components/ui/IconButton";
@@ -11,8 +12,9 @@ import {
   getImageUriFromDatabase,
   deleteAllImagesAsync
 } from "../util/database";
-import AuthProfile from "../components/Auth/AuthUserName";
+import AuthProfile from "../components/Auth/AuthName";
 import ProfileImage from "../components/ScreensComp/ProfileImage";
+import AuthName from "../components/Auth/AuthName";
 
 const StartScreen = ({ navigation }) => {
   const authCtx = useContext(AuthContext);
@@ -20,7 +22,7 @@ const StartScreen = ({ navigation }) => {
   const isFocused = useIsFocused();
   const [images, setImages] = useState(null);
 
- 
+  /*  console.log("images at start", images) */
 
   const handleResetData = async () => {
     Alert.alert(
@@ -85,7 +87,7 @@ const StartScreen = ({ navigation }) => {
       try {
         const uri = await getImageUriFromDatabase();
         setImages(uri);
-       
+        console.log('Image URI fetched:', uri);
       } catch (error) {
         console.error('Error fetching image URI:', error);
       }
@@ -94,11 +96,10 @@ const StartScreen = ({ navigation }) => {
     fetchImageUri();
   }, [isFocused]);
 
-
   return (
     <View style={styles.rootContainer}>
       <ProfileImage images={images} />
-      <AuthProfile />
+      <AuthName />
       <View>
         <Text style={styles.title}>Active Hunt</Text>
         <PlacesList places={places} />

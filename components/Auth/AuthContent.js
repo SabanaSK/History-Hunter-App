@@ -10,7 +10,7 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
   const navigation = useNavigation();
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     email: false,
-    name: false,
+    displayName: false,
     password: false,
   });
 
@@ -23,28 +23,28 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
   };
 
   const submitHandler = (credentials) => {
-    let { email, name, password } = credentials;
+    let { email, displayName, password } = credentials;
 
     email = email.trim();
     password = password.trim();
 
     const emailIsValid = email.includes("@");
     const passwordIsValid = password.length > 6;
-    const nameIsValid = name.length < 10
+    const displayNameIsValid = displayName.length > 0
+
     if (
       !emailIsValid ||
-      !passwordIsValid ||
-      !nameIsValid
+      !passwordIsValid
     ) {
       Alert.alert("Invalid input", "Please check your entered credentials.");
       setCredentialsInvalid({
         email: !emailIsValid,
         password: !passwordIsValid,
-        name: !nameIsValid,
+
       });
       return;
     }
-    onAuthenticate({ email, password, name });
+    onAuthenticate({ email, password, displayName });
   };
 
 

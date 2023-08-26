@@ -10,12 +10,14 @@ import StartScreen from "./screens/StartScreen";
 import MapScreen from "./screens/MapScreen";
 import AddPlaceScreen from "./screens/AddPlaceScreen";
 import AuthContextProvider, { AuthContext } from "./store/AuthContext";
+import UserContextProvider from "./store/UserContext";
 import { initializeDBAsync, initializeImagesDBAsync } from "./util/database";
 import EditProfileScreen from "./screens/EditProfileScreen";
 
 
 const Stack = createNativeStackNavigator();
 //SplashScreen.preventAutoHideAsync();
+
 const AuthStack = () => {
   return (
     <Stack.Navigator>
@@ -34,7 +36,7 @@ const AuthenticatedStack = () => {
         await initializeImagesDBAsync();
         //await SplashScreen.hideAsync();
       } catch (error) {
-        console.error(error);
+        console.error("app", error);
       }
     };
     initDB();
@@ -55,12 +57,10 @@ const Navigation = () => {
   useEffect(() => {
     const fetchToken = async () => {
       const token = await AsyncStorage.getItem("appToken");
-      const uid = await AsyncStorage.getItem("appUid");
-      if (token && uid) {
-        authCtx.authenticate(token, uid);
+      if (token) {
+        authCtx.authenticate(token)
       };
     };
-
     fetchToken();
   }, [authCtx]);
 
@@ -75,8 +75,11 @@ const Navigation = () => {
 export default function App() {
   return (
     <>
+
       <AuthContextProvider>
-        <Navigation />
+        <UserContextProvider>
+          <Navigation />
+        </UserContextProvider>
       </AuthContextProvider>
     </>
   );
