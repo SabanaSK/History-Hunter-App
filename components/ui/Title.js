@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet } from "react-native";
 
-const AuthTitle = ({ title }) => {
+const Title = ({ title }) => {
   return (
     <View>
       <Text style={styles.title}> {title} </Text>
@@ -15,4 +15,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default AuthTitle;
+export default Title;

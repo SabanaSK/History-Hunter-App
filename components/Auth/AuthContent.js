@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import AuthForm from './AuthForm';
 import FlatButton from '../ui/FlatButton';
-import AuthTitle from '../ui/AuthTitle';
+import Title from '../ui/Title';
 
 const AuthContent = ({ isLogin, onAuthenticate }) => {
   const navigation = useNavigation();
@@ -50,7 +50,7 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
 
   return (
     <View style={styles.page}>
-      <AuthTitle title={isLogin ? "Log In" : "Sign in"} />
+      <Title title={isLogin ? "Log In" : "Sign in"} />
       <AuthForm
         isLogin={isLogin}
         onSubmit={submitHandler}

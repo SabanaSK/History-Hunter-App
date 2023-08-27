@@ -16,11 +16,14 @@ import AuthProfile from "../components/Auth/AuthName";
 import ProfileImage from "../components/ScreensComp/ProfileImage";
 import AuthName from "../components/Auth/AuthName";
 
+
 const StartScreen = ({ navigation }) => {
-  const authCtx = useContext(AuthContext);
   const [places, setPlaces] = useState([]);
-  const isFocused = useIsFocused();
   const [images, setImages] = useState(null);
+
+  const authCtx = useContext(AuthContext);
+  const isFocused = useIsFocused();
+
 
   /*  console.log("images at start", images) */
 
@@ -50,7 +53,6 @@ const StartScreen = ({ navigation }) => {
       ]
     );
   };
-
 
 
   useLayoutEffect(() => {
@@ -96,6 +98,7 @@ const StartScreen = ({ navigation }) => {
     fetchImageUri();
   }, [isFocused]);
 
+  
   return (
     <View style={styles.rootContainer}>
       <ProfileImage images={images} />
@@ -103,14 +106,22 @@ const StartScreen = ({ navigation }) => {
       <View>
         <Text style={styles.title}>Active Hunt</Text>
         <PlacesList places={places} />
+
+       
+
       </View>
       <View>
         <Text style={styles.title}>Planned Hunt</Text>
       </View>
       <View>
-        <Pressable onPress={() => navigation.navigate('AddPlace')}  >
+
+        <Pressable onPress={() => navigation.navigate('CreateHunt')}  >
           <Text style={styles.createHunt}>Create Hunt</Text>
         </Pressable>
+
+        {/*  <Pressable onPress={() => navigation.navigate('AddPlace')}  >
+          <Text style={styles.createHunt}>Create Hunt</Text>
+        </Pressable> */}
       </View>
       <View>
         <Text style={styles.medals}>MEDALS</Text>

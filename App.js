@@ -9,10 +9,15 @@ import SignupScreen from "./screens/SignupScreen";
 import StartScreen from "./screens/StartScreen";
 import MapScreen from "./screens/MapScreen";
 import AddPlaceScreen from "./screens/AddPlaceScreen";
+import CreateHuntScreen from "./screens/CreateHuntScreen";
+import EditProfileScreen from "./screens/EditProfileScreen";
+
 import AuthContextProvider, { AuthContext } from "./store/AuthContext";
 import UserContextProvider from "./store/UserContext";
 import { initializeDBAsync, initializeImagesDBAsync } from "./util/database";
-import EditProfileScreen from "./screens/EditProfileScreen";
+import HuntContextProvider, { HuntContext } from "./store/HuntContext";
+
+
 
 
 const Stack = createNativeStackNavigator();
@@ -48,6 +53,7 @@ const AuthenticatedStack = () => {
       <Stack.Screen name="Map" component={MapScreen} />
       <Stack.Screen name="AddPlace" component={AddPlaceScreen} />
       <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+      <Stack.Screen name="CreateHunt" component={CreateHuntScreen} />
     </Stack.Navigator>
   );
 };
@@ -78,7 +84,9 @@ export default function App() {
 
       <AuthContextProvider>
         <UserContextProvider>
+          <HuntContextProvider>
           <Navigation />
+          </HuntContextProvider>
         </UserContextProvider>
       </AuthContextProvider>
     </>

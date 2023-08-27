@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const API_KEY = "AIzaSyDyaRLOEUZycEYTjG1LVvfCgrx8bImEELo";
+const url = `https://auth-app-ab7aa-default-rtdb.europe-west1.firebasedatabase.app`;
 
 const authenticate = async (mode, email, password) => {
   const res = await axios.post(
@@ -51,16 +52,24 @@ export const getUser = async (idToken) => {
   }
 };
 
-const url = `https://auth-app-ab7aa-default-rtdb.europe-west1.firebasedatabase.app`;
 
 export const saveUsers = async (user) => {
   try {
     await axios.post(`${url}/users.json`, user);
-    console.log("Save work");
   } catch (error) {
-    console.error("Error during signup", error.response?.data || error.message);
+    console.error("Error during saveUsers", error.response?.data || error.message);
     throw error;
   }
 }
+
+export const saveHunt = async (hunt) => {
+  try {
+    await axios.post(`${url}/hunts.json`, hunt);
+  } catch (error) {
+    console.error("Error during saveHunts", error.response?.data || error.message);
+    throw error;
+  }
+}
+
 
 

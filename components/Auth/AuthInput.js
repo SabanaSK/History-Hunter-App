@@ -8,15 +8,17 @@ const AuthInput = ({
   keyboardType,
   onUpdateValue
 }) => {
+
   return (
+
     <TextInput
       style={styles.textInput}
       placeholder={placeholder}
       onChangeText={onUpdateValue}
       value={value}
       keyboardType={keyboardType}
-
     />
+    
   );
 }
 

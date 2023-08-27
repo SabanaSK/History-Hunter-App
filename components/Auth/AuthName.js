@@ -18,26 +18,22 @@ const AuthName = () => {
 
         const resp = await http.getUser(authCtx.token);
         if (Array.isArray(resp) && resp.length > 0) {
-
-          console.log("resp", resp)
+          //console.log("resp", resp)
 
           const displayName = resp[0].displayName;
-
-          console.log("display", displayName)
+          //console.log("display", displayName)
 
           userCtx.setCurrentUserName({ name: displayName })
+          //console.log('userctx', userCtx.currentUserName.name)
 
-
-          console.log('userctx', userCtx.currentUserName.name)
         }
 
       } catch (error) {
-        console.error("AuthName", error.response.data);
-
+        console.error("AuthName", error.response.data)
       }
     }
     fetchUser();
-  }, [authCtx]);
+  }, [authCtx, userCtx.currentUserName.name]);
 
   return (
     <View>
