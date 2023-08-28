@@ -12,7 +12,7 @@ const CreateHuntScreen = (props) => {
   const [enteredHuntName, setEnteredHuntName] = useState('');
   const { addHunt } = useContext(HuntContext);
 
-
+/*   console.log("authCtx in createHunt", authCtx.token) */
   const updateCreateInputValueHandler = (inputType, enteredValue) => {
     switch (inputType) {
       case 'hunt-time':

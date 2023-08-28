@@ -15,6 +15,7 @@ import {
 import AuthProfile from "../components/Auth/AuthName";
 import ProfileImage from "../components/ScreensComp/ProfileImage";
 import AuthName from "../components/Auth/AuthName";
+import GetHunt from "../components/ScreensComp/GetHunt";
 
 
 const StartScreen = ({ navigation }) => {
@@ -105,9 +106,9 @@ const StartScreen = ({ navigation }) => {
       <AuthName />
       <View>
         <Text style={styles.title}>Active Hunt</Text>
-        <PlacesList places={places} />
-
-       
+     {/*    <PlacesList places={places} />
+ */}
+       <GetHunt/>
 
       </View>
       <View>

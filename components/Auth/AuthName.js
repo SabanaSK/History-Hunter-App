@@ -10,7 +10,6 @@ const AuthName = () => {
   const authCtx = useContext(AuthContext);
   const userCtx = useContext(UserContext);
 
-  //console.log("userCtx in Auth", userCtx)
 
   useEffect(() => {
     const fetchUser = async () => {
