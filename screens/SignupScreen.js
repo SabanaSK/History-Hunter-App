@@ -20,7 +20,7 @@ const SignupScreen = () => {
       const localId = await http.updateUser(displayName, token);
       await http.saveUsers({ name: displayName, id: localId });
 
-      userCtx.addUser(localId);
+      userCtx.addUser(displayName, localId);
 
     } catch (error) {
       console.log("singUp error :", error)
