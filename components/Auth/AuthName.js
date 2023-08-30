@@ -23,8 +23,8 @@ const AuthName = () => {
           const localId = resp[0].localId;
           //console.log("display", displayName)
 
-          userCtx.setCurrentUserName({ name: displayName, id: localId })
-          //console.log('userctx', userCtx.currentUserName.name)
+          userCtx.setCurrentUser({ name: displayName, id: localId })
+          //console.log('userctx', userCtx.CurrentUser.name)
 
         }
 
@@ -33,11 +33,11 @@ const AuthName = () => {
       }
     }
     fetchUser();
-  }, [authCtx, userCtx.currentUserName.name]);
+  }, [authCtx, userCtx.currentUser.name]);
 
   return (
     <View>
-      <Text >{userCtx.currentUserName.name || "No name"}</Text>
+      <Text >{userCtx.currentUser.name || "No name"}</Text>
     </View>
   );
 

@@ -3,14 +3,15 @@ import * as http from "./../util/http"
 
 export const UserContext = createContext({
   users: [],
-  currentUserName: { name: null, id: null },
-  setCurrentUserName: (name, id) => { },
+  currentUser: { name: null, id: null },
+  setCurrentUser: (name, id) => { },
   addUser: (displayName, localId) => { }
 });
 
 const UserContextProvider = ({ children }) => {
-  const [currentUserName, setCurrentUserName] = useState({ name: null, id: null });
+  const [currentUser, setCurrentUser] = useState({ name: null, id: null });
   const [users, setUsers] = useState([]);
+
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -29,16 +30,16 @@ const UserContextProvider = ({ children }) => {
     };
     fetchUsers();
   }, []);
-  
+
   const addUser = (displayName, localId) => {
     setUsers(prevUsers => [...prevUsers, { name: displayName, id: localId }]);
   };
-  
+
 
   const value = {
     users,
-    currentUserName,
-    setCurrentUserName,
+    currentUser,
+    setCurrentUser,
     addUser
   };
 
