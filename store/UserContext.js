@@ -3,13 +3,13 @@ import * as http from "./../util/http"
 
 export const UserContext = createContext({
   users: [],
-  currentUserName: { name: null },
-  setCurrentUserName: (name) => { },
-  addUser: (name) => { }
+  currentUserName: { name: null, id: null },
+  setCurrentUserName: (name, id) => { },
+  addUser: (displayName, localId) => { }
 });
 
 const UserContextProvider = ({ children }) => {
-  const [currentUserName, setCurrentUserName] = useState({ name: null });
+  const [currentUserName, setCurrentUserName] = useState({ name: null, id: null });
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -19,6 +19,7 @@ const UserContextProvider = ({ children }) => {
 
         const fetchedUsers = Object.values(userData).map(user => ({
           name: user.name,
+          id: user.id
         }));
 
         setUsers(fetchedUsers);
@@ -28,10 +29,11 @@ const UserContextProvider = ({ children }) => {
     };
     fetchUsers();
   }, []);
-
-  const addUser = (name) => {
-    setUsers([...users, name]);
+  
+  const addUser = (displayName, localId) => {
+    setUsers(prevUsers => [...prevUsers, { name: displayName, id: localId }]);
   };
+  
 
   const value = {
     users,

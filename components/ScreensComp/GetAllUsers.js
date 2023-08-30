@@ -6,7 +6,7 @@ import { UserContext } from "../../store/UserContext";
 
 const GetAllUsers = () => {
   const userCtx = useContext(UserContext)
-  console.log("userCtx", userCtx);
+  //console.log("userCtx", userCtx.users);
 
 
   return (

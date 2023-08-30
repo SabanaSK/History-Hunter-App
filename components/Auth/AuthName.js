@@ -10,6 +10,7 @@ const AuthName = () => {
   const authCtx = useContext(AuthContext);
   const userCtx = useContext(UserContext);
 
+  //console.log(userCtx)
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -19,9 +20,10 @@ const AuthName = () => {
           //console.log("resp", resp)
 
           const displayName = resp[0].displayName;
+          const localId = resp[0].localId;
           //console.log("display", displayName)
 
-          userCtx.setCurrentUserName({ name: displayName })
+          userCtx.setCurrentUserName({ name: displayName, id: localId })
           //console.log('userctx', userCtx.currentUserName.name)
 
         }
