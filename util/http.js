@@ -12,7 +12,6 @@ const authenticate = async (mode, email, password) => {
       returnSecureToken: true,
     }
   );
-  /*   console.log("http" ,res) */
   return res.data.idToken;
 
 };
@@ -34,7 +33,7 @@ export const updateUser = async (displayName, idToken) => {
     }
   );
 
-  console.log('http name', resp.data.displayName)
+/*   console.log('http name', resp.data.localId) */
   return resp.data.localId;
 };
 
@@ -51,6 +50,16 @@ export const getUser = async (idToken) => {
   }
 };
 
+export const getAllUsers = async () => {
+  try {
+    const res = await axios.get(`${url}/users.json`);
+    return res.data;
+  } catch (error) {
+    console.error("Error during getAllUsers", error.message);
+    throw error;
+  }
+};
+
 export const getHunts = async () => {
   try {
     const res = await axios.get(`${url}/hunts.json`);
@@ -60,7 +69,6 @@ export const getHunts = async () => {
     throw error;
   }
 };
-
 
 export const saveUsers = async (user) => {
   try {

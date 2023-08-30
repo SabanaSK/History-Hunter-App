@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, Text } from "react-native"
 import { useState, useContext, useCallback } from "react"
 
 import Title from "../components/ui/Title"
@@ -7,7 +7,7 @@ import Button from "../components/ui/Button"
 import { HuntContext } from "../store/HuntContext"
 import LocationPicker from "../components/places/LocationPicker";
 
-const CreateHuntScreen = (props) => {
+const CreateHuntScreen = ({ props, navigation }) => {
   const [enteredHuntTime, setEnteredHuntTime] = useState('');
   const [enteredHuntName, setEnteredHuntName] = useState('');
   const [location, setLocation] = useState();
@@ -57,24 +57,23 @@ const CreateHuntScreen = (props) => {
         value={enteredHuntTime}
         onUpdateValue={(value) => updateCreateInputValueHandler('hunt-time', value)}
         label='How long should it be?'
-        textInputConfig={{
-          keyboardType: 'default',
-        }}
+        
       />
       <Input
         placeholder="Name"
         value={enteredHuntName}
         onUpdateValue={(value) => updateCreateInputValueHandler('hunt-name', value)}
         label='What do you want to call your hunt?'
-        textInputConfig={{
-          keyboardType: 'default',
-        }}
+        
       />
 
 
       <LocationPicker locationHandler={locationHandler} />
 
-      {/* Invite Friends */}
+      <Text onPress={() => navigation.navigate('InviteFriends')}>Invite Friends</Text>
+
+
+
       <Button onPress={submitHandler}> Create Hunt </Button>
 
     </View>

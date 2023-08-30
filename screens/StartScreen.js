@@ -1,9 +1,7 @@
 import { StyleSheet, Text, View, Pressable, Alert } from "react-native";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
-import axios from "axios";
 
-import PlacesList from "../components/places/PlacesList";
 import IconButton from "../components/ui/IconButton";
 import { AuthContext } from "../store/AuthContext";
 import {

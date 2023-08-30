@@ -2,8 +2,7 @@ import { Text, View, TextInput, StyleSheet } from "react-native"
 
 
 
-const Input = ({ label, onUpdateValue, textInputConfig }) => {
-  const { isInvalid } = textInputConfig;
+const Input = ({ label, onUpdateValue, placeholder }) => {
   return (
     <View>
       <Text>
@@ -11,7 +10,7 @@ const Input = ({ label, onUpdateValue, textInputConfig }) => {
       </Text>
       <TextInput style={styles.textInput}
         onChangeText={onUpdateValue}
-        {...textInputConfig}
+        placeholder={placeholder}
       />
     </View>
   )

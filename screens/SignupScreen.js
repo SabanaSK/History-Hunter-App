@@ -17,13 +17,13 @@ const SignupScreen = () => {
       const token = await http.signupUser(email, password);
       authCtx.authenticate(token);
 
-      const resp = await http.updateUser(displayName, token);
-      await http.saveUsers({ name: displayName });
+      const localId = await http.updateUser(displayName, token);
+      await http.saveUsers({ name: displayName, id: localId });
 
-      userCtx.addUser(displayName);
+      userCtx.addUser(localId);
 
     } catch (error) {
-      console.log("singUp error :",error)
+      console.log("singUp error :", error)
       alert("Wrong Credentials")
     }
     setIsAuthenticating(false);

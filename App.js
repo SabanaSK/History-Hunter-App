@@ -11,7 +11,7 @@ import MapScreen from "./screens/MapScreen";
 import AddPlaceScreen from "./screens/AddPlaceScreen";
 import CreateHuntScreen from "./screens/CreateHuntScreen";
 import EditProfileScreen from "./screens/EditProfileScreen";
-
+import InviteFriendsScreen from "./screens/InviteFriendsScreen"
 import AuthContextProvider, { AuthContext } from "./store/AuthContext";
 import UserContextProvider from "./store/UserContext";
 import { initializeDBAsync, initializeImagesDBAsync } from "./util/database";
@@ -54,6 +54,7 @@ const AuthenticatedStack = () => {
       <Stack.Screen name="AddPlace" component={AddPlaceScreen} />
       <Stack.Screen name="EditProfile" component={EditProfileScreen} />
       <Stack.Screen name="CreateHunt" component={CreateHuntScreen} />
+      <Stack.Screen name="InviteFriends" component={InviteFriendsScreen} />
     </Stack.Navigator>
   );
 };
@@ -85,7 +86,7 @@ export default function App() {
       <AuthContextProvider>
         <UserContextProvider>
           <HuntContextProvider>
-          <Navigation />
+            <Navigation />
           </HuntContextProvider>
         </UserContextProvider>
       </AuthContextProvider>

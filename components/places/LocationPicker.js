@@ -48,7 +48,7 @@ const LocationPicker = ({ locationHandler }) => {
 
   const getLocationHandler = async () => {
     const location = await Location.getCurrentPositionAsync();
-    console.log("LocationPicker", location);
+    //console.log("LocationPicker", location);
     setPickedLocation({
       lat: location.coords.latitude,
       lng: location.coords.longitude,
