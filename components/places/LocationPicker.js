@@ -32,6 +32,7 @@ const LocationPicker = ({ locationHandler }) => {
     getLocationDetails();
   }, [pickedLocation, locationHandler]);
 
+
   if (!permission) {
     return <View />;
   }
@@ -47,7 +48,7 @@ const LocationPicker = ({ locationHandler }) => {
 
   const getLocationHandler = async () => {
     const location = await Location.getCurrentPositionAsync();
-    console.log(location);
+    console.log("LocationPicker", location);
     setPickedLocation({
       lat: location.coords.latitude,
       lng: location.coords.longitude,
@@ -64,9 +65,9 @@ const LocationPicker = ({ locationHandler }) => {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.preview}>{previewContent}</View>
-      <View>
+      <View style={styles.buttonContainer}>
         <OutlinedButton icon="location" pressHandler={getLocationHandler}>
           Locate user
         </OutlinedButton>
@@ -79,6 +80,15 @@ const LocationPicker = ({ locationHandler }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingTop: 40,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+    marginBottom: 30,
+  },
   preview: {
     width: "100%",
     height: 250,

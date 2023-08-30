@@ -90,7 +90,7 @@ const StartScreen = ({ navigation }) => {
       try {
         const uri = await getImageUriFromDatabase();
         setImages(uri);
-        console.log('Image URI fetched:', uri);
+        /* console.log('Image URI fetched:', uri); */
       } catch (error) {
         console.error('Error fetching image URI:', error);
       }
@@ -99,16 +99,16 @@ const StartScreen = ({ navigation }) => {
     fetchImageUri();
   }, [isFocused]);
 
-  
+
   return (
     <View style={styles.rootContainer}>
       <ProfileImage images={images} />
       <AuthName />
       <View>
         <Text style={styles.title}>Active Hunt</Text>
-     {/*    <PlacesList places={places} />
+        {/*    <PlacesList places={places} />
  */}
-       <GetHunt/>
+        <GetHunt />
 
       </View>
       <View>
@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 8,
     marginTop: 30,
+    color: "pink",
   },
   createHunt: {
     fontSize: 16,

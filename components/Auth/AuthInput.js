@@ -1,6 +1,6 @@
 import { TextInput, StyleSheet } from 'react-native';
 
-import { Colors } from '../../constants/styles';
+import { Colors } from '../../constants/Colors';
 
 const AuthInput = ({
   value,

@@ -1,4 +1,5 @@
-import { Text, View, TextInput } from "react-native"
+import { Text, View, TextInput, StyleSheet } from "react-native"
+
 
 
 const Input = ({ label, onUpdateValue, textInputConfig }) => {
@@ -8,13 +9,23 @@ const Input = ({ label, onUpdateValue, textInputConfig }) => {
       <Text>
         {label}
       </Text>
-      <TextInput
+      <TextInput style={styles.textInput}
         onChangeText={onUpdateValue}
         {...textInputConfig}
       />
     </View>
   )
 }
-
+const styles = StyleSheet.create({
+  textInput: {
+    fontSize: 18,
+    borderWidth: 1,
+    borderColor: "lightgray",
+    borderRadius: 1,
+    padding: 5,
+    margin: 6,
+    width: 200
+  }
+});
 
 export default Input;

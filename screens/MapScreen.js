@@ -12,7 +12,7 @@ const MapScreen = ({ navigation }) => {
       Alert.alert("No location selected", "You have to pick a location in order to save");
       return;
     }
-    navigation.navigate("AddPlace", pickedLocation);
+    navigation.navigate("CreateHunt", pickedLocation);
   }, [navigation, pickedLocation]);
 
   useLayoutEffect(() => {

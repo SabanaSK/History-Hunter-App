@@ -1,18 +1,23 @@
-import { View } from "react-native"
-import { useState, useContext } from "react"
+import { View, StyleSheet } from "react-native"
+import { useState, useContext, useCallback } from "react"
 
 import Title from "../components/ui/Title"
 import Input from "../components/ui/Input"
 import Button from "../components/ui/Button"
 import { HuntContext } from "../store/HuntContext"
-
+import LocationPicker from "../components/places/LocationPicker";
 
 const CreateHuntScreen = (props) => {
   const [enteredHuntTime, setEnteredHuntTime] = useState('');
   const [enteredHuntName, setEnteredHuntName] = useState('');
+  const [location, setLocation] = useState();
   const { addHunt } = useContext(HuntContext);
 
-/*   console.log("authCtx in createHunt", authCtx.token) */
+  const locationHandler = useCallback((locationInfo) => {
+    setLocation(locationInfo);
+  }, []);
+
+  /*   console.log("authCtx in createHunt", authCtx.token) */
   const updateCreateInputValueHandler = (inputType, enteredValue) => {
     switch (inputType) {
       case 'hunt-time':
@@ -28,12 +33,12 @@ const CreateHuntScreen = (props) => {
     try {
       const newHunt = {
         name: enteredHuntName,
-        estimatedTime: enteredHuntTime
+        estimatedTime: enteredHuntTime,
+        location: location,
         // Add other properties as needed
       };
 
       addHunt(newHunt);
-
       setEnteredHuntTime('');
       setEnteredHuntName('');
     } catch (error) {
@@ -44,7 +49,7 @@ const CreateHuntScreen = (props) => {
 
 
   return (
-    <View >
+    <View>
       <Title title={"Customize"} />
 
       <Input
@@ -67,12 +72,17 @@ const CreateHuntScreen = (props) => {
       />
 
 
-      {/* Pick Location import to here */}
+      <LocationPicker locationHandler={locationHandler} />
+
       {/* Invite Friends */}
       <Button onPress={submitHandler}> Create Hunt </Button>
 
     </View>
   )
 }
+
+
+
+
 
 export default CreateHuntScreen;

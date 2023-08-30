@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
 import * as http from "../../util/http";
 
@@ -35,9 +35,10 @@ const GetHunt = () => {
           data={hunts}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <View>
-              <Text>{item.name}</Text>
-              <Text>Estimated Time: {item.estimatedTime}</Text>
+            /* Style here */
+            <View style={styles.container}>
+              <Text  style={styles.title}>{item.name}</Text>
+              {/* <Text>Estimated Time: {item.estimatedTime}</Text> */}
             </View>
           )}
 
@@ -48,5 +49,16 @@ const GetHunt = () => {
     </View>
   );
 };
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    
+  },
+  title: {
+    fontSize: 14,
+  }
+});
 
 export default GetHunt;
