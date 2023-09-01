@@ -1,13 +1,35 @@
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { useState, useEffect, useContext } from "react";
 import * as http from "../../util/http";
 
 import { UserContext } from "../../store/UserContext";
 
-const GetAllUsers = () => {
+const GetAllUsers = (props) => {
   const userCtx = useContext(UserContext);
 
-  const filteredUsers = userCtx.users.filter(user => user.id !== userCtx.currentUser.id);
+  const filteredUsers = userCtx.users.filter(
+    (user) => user.id !== userCtx.currentUser.id
+  );
+
+  const [selectedUserIds, setSelectedUserIds] = useState([]);
+
+  const handleUserPress = (user) => {
+    props.onUserSelect(user);
+
+    setSelectedUserIds((prevIds) => {
+      if (prevIds.includes(user.id)) {
+        return prevIds.filter((id) => id !== user.id);
+      } else {
+        return [...prevIds, user.id];
+      }
+    });
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -16,9 +38,15 @@ const GetAllUsers = () => {
           data={filteredUsers}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <View style={styles.container}>
-              <Text style={styles.title} >{item.name}</Text>
-            </View>
+            <TouchableOpacity onPress={() => handleUserPress(item)}>
+              <View
+                style={[
+                  styles.container,
+                  selectedUserIds.includes(item.id) && styles.selected,
+                ]}>
+                <Text style={styles.title}>{item.name}</Text>
+              </View>
+            </TouchableOpacity>
           )}
           numColumns={3}
         />
@@ -29,20 +57,19 @@ const GetAllUsers = () => {
   );
 };
 
-
 const styles = StyleSheet.create({
   mainContainer: {
     alignItems: "center",
-    backgroundColor: '#f4f4f4'
+    backgroundColor: "#f4f4f4",
   },
   container: {
-    width: 100,  // Fixed width for square
-    height: 100,  // Fixed height for square
+    width: 100, // Fixed width for square
+    height: 100, // Fixed height for square
     margin: 10,
     padding: 15,
-    justifyContent: 'center',  // Center content vertically inside the square
-    alignItems: 'center',  // Center content horizontally inside the square
-    backgroundColor: '#fff',
+    justifyContent: "center", // Center content vertically inside the square
+    alignItems: "center", // Center content horizontally inside the square
+    backgroundColor: "#fff",
     borderRadius: 5,
     shadowColor: "#000",
     shadowOffset: {
@@ -55,10 +82,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 25,
-    color: '#333'
-  }
+    color: "#333",
+  },
+  selected: {
+    backgroundColor: "#2EFF00",
+  },
 });
-
-
 
 export default GetAllUsers;
