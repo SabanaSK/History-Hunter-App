@@ -1,29 +1,39 @@
 import { View, StyleSheet, Text } from "react-native";
-import { useState, useContext, useCallback, useLayoutEffect } from "react";
+import {
+  useState,
+  useContext,
+  useCallback,
+  useLayoutEffect,
+  useEffect,
+} from "react";
 
 import Title from "../components/ui/Title";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
-import { HuntContext } from "../store/HuntContext";
 import LocationPicker from "../components/places/LocationPicker";
-import IconButton from "../components/ui/IconButton";
 import OutlinedButton from "../components/ui/OutlinedButton";
 import { FriendsContext } from "../store/FriendsContext";
+import { HuntContext } from "../store/HuntContext";
+import { UserContext } from "../store/UserContext";
 
 const CreateHuntScreen = ({ props, navigation }) => {
   const [enteredHuntTime, setEnteredHuntTime] = useState("");
   const [enteredHuntName, setEnteredHuntName] = useState("");
+  const [creator, setCreator] = useState("");
   const [location, setLocation] = useState();
   const { addHunt } = useContext(HuntContext);
   const { selectedFriends } = useContext(FriendsContext);
+  const userCtx = useContext(UserContext);
 
-  console.log("Selected Friends before DB insert: ", selectedFriends);
+  useEffect(() => {
+    setCreator(userCtx.currentUser);
+  }, [userCtx]);
 
+  //console.log("creator", creator);
   const locationHandler = useCallback((locationInfo) => {
     setLocation(locationInfo);
   }, []);
 
-  /*   console.log("authCtx in createHunt", authCtx.token) */
   const updateCreateInputValueHandler = (inputType, enteredValue) => {
     switch (inputType) {
       case "hunt-time":
@@ -41,13 +51,14 @@ const CreateHuntScreen = ({ props, navigation }) => {
         name: enteredHuntName,
         estimatedTime: enteredHuntTime,
         location: location,
-        invitedFriends: selectedFriends,
-        // Add other properties as needed
+        invitees: selectedFriends,
+        creator: creator,
       };
 
       addHunt(newHunt);
       setEnteredHuntTime("");
       setEnteredHuntName("");
+      /* After sumbit might navigate to createHunt? */
     } catch (error) {
       console.error("Failed to create the hunt", error);
     }
