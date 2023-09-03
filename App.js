@@ -11,14 +11,12 @@ import MapScreen from "./screens/MapScreen";
 import AddPlaceScreen from "./screens/AddPlaceScreen";
 import CreateHuntScreen from "./screens/CreateHuntScreen";
 import EditProfileScreen from "./screens/EditProfileScreen";
-import InviteFriendsScreen from "./screens/InviteFriendsScreen"
+import InviteFriendsScreen from "./screens/InviteFriendsScreen";
 import AuthContextProvider, { AuthContext } from "./store/AuthContext";
 import UserContextProvider from "./store/UserContext";
 import { initializeDBAsync, initializeImagesDBAsync } from "./util/database";
 import HuntContextProvider, { HuntContext } from "./store/HuntContext";
-
-
-
+import { FriendsContextProvider } from "./store/FriendsContext";
 
 const Stack = createNativeStackNavigator();
 //SplashScreen.preventAutoHideAsync();
@@ -33,7 +31,6 @@ const AuthStack = () => {
 };
 
 const AuthenticatedStack = () => {
-
   useEffect(() => {
     const initDB = async () => {
       try {
@@ -60,13 +57,13 @@ const AuthenticatedStack = () => {
 };
 
 const Navigation = () => {
-  const authCtx = useContext(AuthContext)
+  const authCtx = useContext(AuthContext);
   useEffect(() => {
     const fetchToken = async () => {
       const token = await AsyncStorage.getItem("appToken");
       if (token) {
-        authCtx.authenticate(token)
-      };
+        authCtx.authenticate(token);
+      }
     };
     fetchToken();
   }, [authCtx]);
@@ -75,18 +72,18 @@ const Navigation = () => {
     <NavigationContainer>
       {authCtx.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
     </NavigationContainer>
-
   );
 };
 
 export default function App() {
   return (
     <>
-
       <AuthContextProvider>
         <UserContextProvider>
           <HuntContextProvider>
-            <Navigation />
+            <FriendsContextProvider>
+              <Navigation />
+            </FriendsContextProvider>
           </HuntContextProvider>
         </UserContextProvider>
       </AuthContextProvider>

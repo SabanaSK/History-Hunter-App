@@ -1,25 +1,24 @@
 import { Text, View, StyleSheet } from "react-native";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import Title from "../components/ui/Title";
 import GetAllUsers from "../components/ScreensComp/GetAllUsers";
 import Button from "../components/ui/Button";
+import { FriendsContext } from "../store/FriendsContext";
 
-const InviteFriendsScreen = () => {
-  const [selectedFriends, setSelectedFriends] = useState([]);
+const InviteFriendsScreen = ({ navigation }) => {
+  const { selectedFriends, addFriend, removeFriend } =
+    useContext(FriendsContext);
+ 
 
   const handleUserSelect = (selectedUser) => {
     if (selectedFriends.some((friend) => friend.id === selectedUser.id)) {
-      setSelectedFriends(
-        (
-          prevFriends //remove
-        ) => prevFriends.filter((friend) => friend.id !== selectedUser.id)
-      );
+      removeFriend(selectedUser.id);
     } else {
-      //Add user
-      setSelectedFriends((prevFriends) => [...prevFriends, selectedUser]);
+      addFriend(selectedUser);
     }
   };
+  console.log("Selected Friends  ", selectedFriends);
 
   return (
     <View style={styles.mainContainer}>
@@ -38,7 +37,9 @@ const InviteFriendsScreen = () => {
         <GetAllUsers onUserSelect={handleUserSelect} />
       </View>
       <View style={styles.btnContainer}>
-        <Button>Invite</Button>
+        <Button onPress={() => navigation.navigate("CreateHunt")}>
+          Invite
+        </Button>
       </View>
     </View>
   );

@@ -59,7 +59,7 @@ const LocationPicker = ({ locationHandler }) => {
     navigation.navigate("Map");
   };
 
-  let previewContent = <Text>No picked location yet</Text>
+  let previewContent = <Text style={styles.text} >No picked location yet</Text>
   if (pickedLocation) {
     previewContent = <Image style={styles.map} source={{ uri: createLocationUrl(pickedLocation) }} />
   }
@@ -81,13 +81,12 @@ const LocationPicker = ({ locationHandler }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 40,
+    flex: 1,
+    paddingTop: 10,
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
-    marginBottom: 30,
   },
   preview: {
     width: "100%",
@@ -97,6 +96,9 @@ const styles = StyleSheet.create({
     /* Detta krävs för att kartan ska synas */
     width: "100%",
     height: "100%",
+  },
+  text: {
+  textAlign: "center"
   }
 
 });
