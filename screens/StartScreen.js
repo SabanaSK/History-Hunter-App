@@ -8,13 +8,12 @@ import {
   getAllPlacesAsync,
   deleteAllPlacesAsync,
   getImageUriFromDatabase,
-  deleteAllImagesAsync
+  deleteAllImagesAsync,
 } from "../util/database";
 import AuthProfile from "../components/Auth/AuthName";
 import ProfileImage from "../components/ScreensComp/ProfileImage";
 import AuthName from "../components/Auth/AuthName";
 import GetHunt from "../components/ScreensComp/GetHunt";
-
 
 const StartScreen = ({ navigation }) => {
   const [places, setPlaces] = useState([]);
@@ -23,36 +22,30 @@ const StartScreen = ({ navigation }) => {
   const authCtx = useContext(AuthContext);
   const isFocused = useIsFocused();
 
-
   /*  console.log("images at start", images) */
 
   const handleResetData = async () => {
-    Alert.alert(
-      "Confirm Reset",
-      "Are you sure you want to delete all data?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Delete",
-          style: "destructive",
-          onPress: async () => {
-            await deleteAllPlacesAsync();
-            await deleteAllImagesAsync();
+    Alert.alert("Confirm Reset", "Are you sure you want to delete all data?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: async () => {
+          await deleteAllPlacesAsync();
+          await deleteAllImagesAsync();
 
-            // Reload places
-            const allPlaces = await getAllPlacesAsync();
-            setPlaces(allPlaces);
+          // Reload places
+          const allPlaces = await getAllPlacesAsync();
+          setPlaces(allPlaces);
 
-            /* KAn lägg refresh for image här om vill */
-          },
+          /* KAn lägg refresh for image här om vill */
         },
-      ]
-    );
+      },
+    ]);
   };
-
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -65,15 +58,10 @@ const StartScreen = ({ navigation }) => {
         />
       ),
       headerRight: () => (
-        <IconButton
-          icon="logout"
-          size={30}
-          onPress={authCtx.logout}
-        />
+        <IconButton icon="logout" size={30} onPress={authCtx.logout} />
       ),
     });
   }, [authCtx, navigation]);
-
 
   useEffect(() => {
     const loadPlaces = async () => {
@@ -90,31 +78,22 @@ const StartScreen = ({ navigation }) => {
         setImages(uri);
         /* console.log('Image URI fetched:', uri); */
       } catch (error) {
-        console.error('Error fetching image URI:', error);
+        console.error("Error fetching image URI:", error);
       }
     };
 
     fetchImageUri();
   }, [isFocused]);
 
-
   return (
     <View style={styles.rootContainer}>
       <ProfileImage images={images} />
       <AuthName />
-      <View>
-        <Text style={styles.title}>Active Hunt</Text>
-        {/*    <PlacesList places={places} />
- */}
-        <GetHunt />
 
-      </View>
-      <View>
-        <Text style={styles.title}>Planned Hunt</Text>
-      </View>
-      <View>
+      <GetHunt />
 
-        <Pressable onPress={() => navigation.navigate('CreateHunt')}  >
+      <View>
+        <Pressable onPress={() => navigation.navigate("CreateHunt")}>
           <Text style={styles.createHunt}>Create Hunt</Text>
         </Pressable>
 
@@ -128,7 +107,6 @@ const StartScreen = ({ navigation }) => {
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   rootContainer: {
@@ -152,7 +130,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     color: "blue",
-  }
+  },
 });
 
 export default StartScreen;

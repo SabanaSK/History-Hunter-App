@@ -1,17 +1,22 @@
 import { View, Text, FlatList, StyleSheet } from "react-native";
-import { useState, useEffect } from "react";
-
+import { useState, useEffect, useContext } from "react";
 import * as http from "../../util/http";
+import { UserContext } from "../../store/UserContext";
 
 const GetHunt = () => {
   const [hunts, setHunts] = useState([]);
+  const [activeHunts, setActiveHunts] = useState([]);
+  const [plannedHunts, setPlannedHunts] = useState([]);
+
+  const userCtx = useContext(UserContext);
+  const currentUser = userCtx.currentUser.id;
 
   useEffect(() => {
     const fetchHunts = async () => {
       try {
         const data = await http.getHunts();
 
-        const dataArray = Object.keys(data).map((key) => {
+        const dataArray = Object.keys(data || {}).map((key) => {
           return {
             id: key,
             ...data[key],
@@ -27,23 +32,43 @@ const GetHunt = () => {
     fetchHunts();
   }, []);
 
+  useEffect(() => {
+    if (hunts && hunts.length > 0) {
+      const active = hunts.filter((hunt) => hunt.creator?.id === currentUser);
+      const planned = hunts.filter(
+        (hunt) =>
+          hunt.creator?.id !== currentUser &&
+          hunt.invitees?.some((invitee) => invitee.id === currentUser)
+      );
+      setActiveHunts(active);
+      setPlannedHunts(planned);
+    }
+  }, [hunts]);
+
+  const renderItem = ({ item }) => (
+    <View style={styles.container}>
+      <Text style={styles.Text}>{item.name}</Text>
+    </View>
+  );
+
   return (
     <View>
-      {hunts.length > 0 ? (
+      <View>
+        <Text style={styles.title}>Active Hunts</Text>
         <FlatList
-          data={hunts}
+          data={activeHunts}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            /* Style here */
-            <View style={styles.container}>
-              <Text style={styles.title}>{item.name}</Text>
-              {/* <Text>Estimated Time: {item.estimatedTime}</Text> */}
-            </View>
-          )}
+          renderItem={renderItem}
         />
-      ) : (
-        <Text>No hunts found!</Text>
-      )}
+      </View>
+      <View>
+        <Text style={styles.title}>Planned Hunts</Text>
+        <FlatList
+          data={plannedHunts}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+        />
+      </View>
     </View>
   );
 };
@@ -53,7 +78,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 14,
+    fontSize: 20,
+    color: "#FF0075",
   },
 });
 

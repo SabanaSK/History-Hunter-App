@@ -4,7 +4,7 @@ import { View, Text } from "react-native";
 
 import { UserContext } from "../../store/UserContext";
 import { AuthContext } from "../../store/AuthContext";
-import * as http from "../../util/http"
+import * as http from "../../util/http";
 
 const AuthName = () => {
   const authCtx = useContext(AuthContext);
@@ -14,7 +14,6 @@ const AuthName = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-
         const resp = await http.getUser(authCtx.token);
         if (Array.isArray(resp) && resp.length > 0) {
           //console.log("resp", resp)
@@ -23,24 +22,21 @@ const AuthName = () => {
           const localId = resp[0].localId;
           //console.log("display", displayName)
 
-          userCtx.setCurrentUser({ name: displayName, id: localId })
+          userCtx.setCurrentUser({ name: displayName, id: localId });
           //console.log('userctx', userCtx.CurrentUser.name)
-
         }
-
       } catch (error) {
-        console.error("AuthName", error.response.data)
+        console.error("AuthName", error.response.data);
       }
-    }
+    };
     fetchUser();
   }, [authCtx, userCtx.currentUser.name]);
 
   return (
     <View>
-      <Text >{userCtx.currentUser.name || "No name"}</Text>
+      <Text>{userCtx.currentUser.name || "No name"}</Text>
     </View>
   );
-
 };
 
 export default AuthName;
