@@ -12,6 +12,8 @@ import AddPlaceScreen from "./screens/AddPlaceScreen";
 import CreateHuntScreen from "./screens/CreateHuntScreen";
 import EditProfileScreen from "./screens/EditProfileScreen";
 import InviteFriendsScreen from "./screens/InviteFriendsScreen";
+import ConfirmHuntScreen from "./screens/ConfirmHuntScreen";
+
 import AuthContextProvider, { AuthContext } from "./store/AuthContext";
 import UserContextProvider from "./store/UserContext";
 import { initializeDBAsync, initializeImagesDBAsync } from "./util/database";
@@ -52,6 +54,7 @@ const AuthenticatedStack = () => {
       <Stack.Screen name="EditProfile" component={EditProfileScreen} />
       <Stack.Screen name="CreateHunt" component={CreateHuntScreen} />
       <Stack.Screen name="InviteFriends" component={InviteFriendsScreen} />
+      <Stack.Screen name="ConfirmHunt" component={ConfirmHuntScreen} />
     </Stack.Navigator>
   );
 };

@@ -89,9 +89,7 @@ const StartScreen = ({ navigation }) => {
     <View style={styles.rootContainer}>
       <ProfileImage images={images} />
       <AuthName />
-
       <GetHunt />
-
       <View>
         <Pressable onPress={() => navigation.navigate("CreateHunt")}>
           <Text style={styles.createHunt}>Create Hunt</Text>

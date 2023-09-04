@@ -1,5 +1,7 @@
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import { View, Text, FlatList, StyleSheet, Pressable } from "react-native";
 import { useState, useEffect, useContext } from "react";
+import { useNavigation } from "@react-navigation/native";
+
 import * as http from "../../util/http";
 import { UserContext } from "../../store/UserContext";
 
@@ -7,9 +9,13 @@ const GetHunt = () => {
   const [hunts, setHunts] = useState([]);
   const [activeHunts, setActiveHunts] = useState([]);
   const [plannedHunts, setPlannedHunts] = useState([]);
-
+  const navigation = useNavigation();
   const userCtx = useContext(UserContext);
   const currentUser = userCtx.currentUser.id;
+
+  const navigateToConfirmScreen = (huntDetails) => {
+    navigation.navigate("ConfirmHunt", { details: huntDetails });
+  };
 
   useEffect(() => {
     const fetchHunts = async () => {
@@ -46,9 +52,11 @@ const GetHunt = () => {
   }, [hunts]);
 
   const renderItem = ({ item }) => (
-    <View style={styles.container}>
-      <Text style={styles.Text}>{item.name}</Text>
-    </View>
+    <Pressable onPress={() => navigateToConfirmScreen(item)}>
+      <View style={styles.container}>
+        <Text style={styles.Text}>{item.name}</Text>
+      </View>
+    </Pressable>
   );
 
   return (
