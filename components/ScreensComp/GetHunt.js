@@ -1,5 +1,6 @@
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
+
 import * as http from "../../util/http";
 
 const GetHunt = () => {
@@ -9,13 +10,11 @@ const GetHunt = () => {
     const fetchHunts = async () => {
       try {
         const data = await http.getHunts();
-        //console.log("gethunt", data);
 
-        // Convert data object into an array
-        const dataArray = Object.keys(data).map(key => {
+        const dataArray = Object.keys(data).map((key) => {
           return {
             id: key,
-            ...data[key]
+            ...data[key],
           };
         });
 
@@ -37,11 +36,10 @@ const GetHunt = () => {
           renderItem={({ item }) => (
             /* Style here */
             <View style={styles.container}>
-              <Text  style={styles.title}>{item.name}</Text>
+              <Text style={styles.title}>{item.name}</Text>
               {/* <Text>Estimated Time: {item.estimatedTime}</Text> */}
             </View>
           )}
-
         />
       ) : (
         <Text>No hunts found!</Text>
@@ -50,15 +48,13 @@ const GetHunt = () => {
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
   },
   title: {
     fontSize: 14,
-  }
+  },
 });
 
 export default GetHunt;

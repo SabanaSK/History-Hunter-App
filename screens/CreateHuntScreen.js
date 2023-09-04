@@ -47,12 +47,21 @@ const CreateHuntScreen = ({ props, navigation }) => {
 
   const submitHandler = async () => {
     try {
+     
+      const updatedCreator = { ...creator, status: "Active" };
+
+     
+      const updatedSelectedFriends = selectedFriends.map((friend) => ({
+        ...friend,
+        status: "Active",
+      }));
+
       const newHunt = {
         name: enteredHuntName,
         estimatedTime: enteredHuntTime,
         location: location,
-        invitees: selectedFriends,
-        creator: creator,
+        invitees: updatedSelectedFriends,
+        creator: updatedCreator,
       };
 
       addHunt(newHunt);
