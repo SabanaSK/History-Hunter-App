@@ -2,21 +2,15 @@ import { Text, View, Image } from "react-native";
 
 import { createLocationUrl } from "../util/location";
 import Button from "../components/ui/Button";
+import { useEffect, useState } from "react";
 
 const ConfirmHuntScreen = ({ route, navigation }) => {
   const { details } = route.params;
   const huntLocationUrl = createLocationUrl(details.location);
 
   const continueHandler = async () => {
-    navigation.navigate("LocalPosition");
+    navigation.navigate("LocalPosition", { details: details });
   };
-
-  //TODO
-
-  //Real Address should added for userlocation
-  //Real Address should added for hunt
-  //Adding function or navigation to button
-  //Design
 
   return (
     <View>
