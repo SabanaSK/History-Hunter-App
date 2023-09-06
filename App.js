@@ -13,12 +13,14 @@ import CreateHuntScreen from "./screens/CreateHuntScreen";
 import EditProfileScreen from "./screens/EditProfileScreen";
 import InviteFriendsScreen from "./screens/InviteFriendsScreen";
 import ConfirmHuntScreen from "./screens/ConfirmHuntScreen";
+import LocalPositionScreen from "./screens/LocalPositionScreen";
 
 import AuthContextProvider, { AuthContext } from "./store/AuthContext";
 import UserContextProvider from "./store/UserContext";
 import { initializeDBAsync, initializeImagesDBAsync } from "./util/database";
 import HuntContextProvider, { HuntContext } from "./store/HuntContext";
 import { FriendsContextProvider } from "./store/FriendsContext";
+
 
 const Stack = createNativeStackNavigator();
 //SplashScreen.preventAutoHideAsync();
@@ -55,6 +57,7 @@ const AuthenticatedStack = () => {
       <Stack.Screen name="CreateHunt" component={CreateHuntScreen} />
       <Stack.Screen name="InviteFriends" component={InviteFriendsScreen} />
       <Stack.Screen name="ConfirmHunt" component={ConfirmHuntScreen} />
+      <Stack.Screen name="LocalPosition" component={LocalPositionScreen} />
     </Stack.Navigator>
   );
 };
@@ -83,11 +86,13 @@ export default function App() {
     <>
       <AuthContextProvider>
         <UserContextProvider>
-          <HuntContextProvider>
-            <FriendsContextProvider>
-              <Navigation />
-            </FriendsContextProvider>
-          </HuntContextProvider>
+        
+            <HuntContextProvider>
+              <FriendsContextProvider>
+                <Navigation />
+              </FriendsContextProvider>
+            </HuntContextProvider>
+        
         </UserContextProvider>
       </AuthContextProvider>
     </>

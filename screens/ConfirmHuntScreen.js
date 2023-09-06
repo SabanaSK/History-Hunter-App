@@ -1,12 +1,18 @@
-import { Text, View } from "react-native";
+import { Text, View, Image } from "react-native";
+
+import { createLocationUrl } from "../util/location";
 import Button from "../components/ui/Button";
 
-const ConfirmHuntScreen = ({ route }) => {
+const ConfirmHuntScreen = ({ route, navigation }) => {
   const { details } = route.params;
+  const huntLocationUrl = createLocationUrl(details.location);
+
+  const continueHandler = async () => {
+    navigation.navigate("LocalPosition");
+  };
 
   //TODO
 
-  //Adding Real map here
   //Real Address should added for userlocation
   //Real Address should added for hunt
   //Adding function or navigation to button
@@ -18,13 +24,16 @@ const ConfirmHuntScreen = ({ route }) => {
       <Text>You picked:</Text>
       <Text>{details.name}</Text>
       <Text>Here is the route you will be taking</Text>
-      <Text>Map here</Text>
-      <Text>User location address</Text>
-      <Text>Hunt address</Text>
+      <Image
+        style={{ width: 400, height: 200 }}
+        source={{ uri: huntLocationUrl }}
+      />
+
+      <Text>{details.location.address}</Text>
 
       <Text>You should take approximately</Text>
       <Text>{details.estimatedTime}</Text>
-      <Button>Confirm</Button>
+      <Button onPress={continueHandler}>Confirm</Button>
     </View>
   );
 };
