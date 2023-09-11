@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { View, Button, Alert } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
+
+import { fetchRouteDirections } from "../util/location";
 import * as Location from "expo-location";
 
 const LocalPositionScreen = ({ route }) => {
   const { details } = route.params;
-  console.log("check", details);
+  /*   console.log("check", details); */
   const [userLocation, setUserLocation] = useState(null);
   const [selectedDestination, setSelectedDestination] = useState(null);
   const [routeCoordinates, setRouteCoordinates] = useState([]);
@@ -36,15 +38,19 @@ const LocalPositionScreen = ({ route }) => {
     getUserLocation();
   }, []);
 
-  const handleDestinationClick = () => {
-    setSelectedDestination(destination);
-    setRouteCoordinates([
-      { latitude: userLocation.latitude, longitude: userLocation.longitude },
-      {
-        latitude: destination.coordinate.latitude,
-        longitude: destination.coordinate.longitude,
-      },
-    ]);
+  const handleDestinationClick = async () => {
+    try {
+      const coordinates = await fetchRouteDirections(
+        userLocation,
+        destination.coordinate
+      );
+      console.log("see", coordinates);
+
+      setSelectedDestination(destination);
+      setRouteCoordinates(coordinates);
+    } catch (error) {
+      console.error("Failed to fetch route:", error);
+    }
   };
 
   if (!userLocation) {
@@ -66,7 +72,11 @@ const LocalPositionScreen = ({ route }) => {
           longitudeDelta: 0.0421,
         }}
       >
-        <Marker coordinate={userLocation} title="You are here" />
+        <Marker
+          coordinate={userLocation}
+          title="You are here"
+          pinColor="blue"
+        />
         <Marker
           coordinate={destination.coordinate}
           title={destination.name}
