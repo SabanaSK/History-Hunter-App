@@ -20,7 +20,7 @@ import UserContextProvider from "./store/UserContext";
 import { initializeDBAsync, initializeImagesDBAsync } from "./util/database";
 import HuntContextProvider, { HuntContext } from "./store/HuntContext";
 import { FriendsContextProvider } from "./store/FriendsContext";
-
+import TakePhotoScreen from "./screens/TakePhotoScreen";
 
 const Stack = createNativeStackNavigator();
 //SplashScreen.preventAutoHideAsync();
@@ -58,6 +58,7 @@ const AuthenticatedStack = () => {
       <Stack.Screen name="InviteFriends" component={InviteFriendsScreen} />
       <Stack.Screen name="ConfirmHunt" component={ConfirmHuntScreen} />
       <Stack.Screen name="LocalPosition" component={LocalPositionScreen} />
+      <Stack.Screen name="TakePhoto" component={TakePhotoScreen} />
     </Stack.Navigator>
   );
 };
@@ -86,13 +87,11 @@ export default function App() {
     <>
       <AuthContextProvider>
         <UserContextProvider>
-        
-            <HuntContextProvider>
-              <FriendsContextProvider>
-                <Navigation />
-              </FriendsContextProvider>
-            </HuntContextProvider>
-        
+          <HuntContextProvider>
+            <FriendsContextProvider>
+              <Navigation />
+            </FriendsContextProvider>
+          </HuntContextProvider>
         </UserContextProvider>
       </AuthContextProvider>
     </>

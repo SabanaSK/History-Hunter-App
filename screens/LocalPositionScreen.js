@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { View, Button, Alert } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
+import { useNavigation } from "@react-navigation/native";
 
 import { fetchRouteDirections } from "../util/location";
 import * as Location from "expo-location";
 
 const LocalPositionScreen = ({ route }) => {
   const { details } = route.params;
-  /*   console.log("check", details); */
   const [userLocation, setUserLocation] = useState(null);
   const [selectedDestination, setSelectedDestination] = useState(null);
   const [routeCoordinates, setRouteCoordinates] = useState([]);
+  const navigation = useNavigation();
 
   const destination = {
     name: details.name,
@@ -38,16 +39,59 @@ const LocalPositionScreen = ({ route }) => {
     getUserLocation();
   }, []);
 
+  const toRad = (value) => {
+    return (value * Math.PI) / 180;
+  };
+
+  const isUserNearDestination = (
+    userLocation,
+    destinationLocation,
+    thresholdInMeters = 50
+  ) => {
+    const R = 6371000; 
+    const dLat = toRad(destinationLocation.latitude - userLocation.latitude);
+    const dLon = toRad(destinationLocation.longitude - userLocation.longitude);
+
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(userLocation.latitude)) *
+        Math.cos(toRad(destinationLocation.latitude)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const distance = R * c;
+
+    return distance <= thresholdInMeters;
+  };
+
   const handleDestinationClick = async () => {
     try {
       const coordinates = await fetchRouteDirections(
         userLocation,
         destination.coordinate
       );
-      console.log("see", coordinates);
 
       setSelectedDestination(destination);
       setRouteCoordinates(coordinates);
+
+      if (isUserNearDestination(userLocation, destination.coordinate)) {
+        Alert.alert(
+          "You are near the destination",
+          "Would you like to proceed to the next screen?",
+          [
+            {
+              text: "Yes",
+              onPress: () => navigation.navigate("TakePhoto"),
+            },
+            {
+              text: "No",
+              style: "cancel",
+            },
+          ]
+        );
+      }
     } catch (error) {
       console.error("Failed to fetch route:", error);
     }
