@@ -1,0 +1,53 @@
+import React from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+
+const Popup = ({ isVisible, text, onClose, onConfirm, header, answer }) => {
+  if (!isVisible) return null;
+
+  return (
+    <View style={styles.popupContainer}>
+      <View style={styles.popup}>
+        <Text style={styles.popupHeader}>{header}</Text>
+        <Text>{text}</Text>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={onConfirm} style={styles.button}>
+            <Text>{answer}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onClose} style={styles.button}>
+            <Text>No</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  popupContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  popup: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
+  },
+  button: {
+    backgroundColor: "#007bff",
+    padding: 10,
+    borderRadius: 5,
+  },
+});
+
+export default Popup;

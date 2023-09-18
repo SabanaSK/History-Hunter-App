@@ -8,7 +8,6 @@ import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
 import StartScreen from "./screens/StartScreen";
 import MapScreen from "./screens/MapScreen";
-import AddPlaceScreen from "./screens/AddPlaceScreen";
 import CreateHuntScreen from "./screens/CreateHuntScreen";
 import EditProfileScreen from "./screens/EditProfileScreen";
 import InviteFriendsScreen from "./screens/InviteFriendsScreen";
@@ -17,10 +16,9 @@ import LocalPositionScreen from "./screens/LocalPositionScreen";
 
 import AuthContextProvider, { AuthContext } from "./store/AuthContext";
 import UserContextProvider from "./store/UserContext";
-import { initializeDBAsync, initializeImagesDBAsync } from "./util/database";
+import { initializeImagesDBAsync } from "./util/database";
 import HuntContextProvider, { HuntContext } from "./store/HuntContext";
 import { FriendsContextProvider } from "./store/FriendsContext";
-import TakePhotoScreen from "./screens/TakePhotoScreen";
 
 const Stack = createNativeStackNavigator();
 //SplashScreen.preventAutoHideAsync();
@@ -38,7 +36,6 @@ const AuthenticatedStack = () => {
   useEffect(() => {
     const initDB = async () => {
       try {
-        await initializeDBAsync();
         await initializeImagesDBAsync();
         //await SplashScreen.hideAsync();
       } catch (error) {
@@ -52,13 +49,11 @@ const AuthenticatedStack = () => {
     <Stack.Navigator>
       <Stack.Screen name="Start" component={StartScreen} />
       <Stack.Screen name="Map" component={MapScreen} />
-      <Stack.Screen name="AddPlace" component={AddPlaceScreen} />
       <Stack.Screen name="EditProfile" component={EditProfileScreen} />
       <Stack.Screen name="CreateHunt" component={CreateHuntScreen} />
       <Stack.Screen name="InviteFriends" component={InviteFriendsScreen} />
       <Stack.Screen name="ConfirmHunt" component={ConfirmHuntScreen} />
       <Stack.Screen name="LocalPosition" component={LocalPositionScreen} />
-      <Stack.Screen name="TakePhoto" component={TakePhotoScreen} />
     </Stack.Navigator>
   );
 };

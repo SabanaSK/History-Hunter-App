@@ -23,16 +23,13 @@ const StartScreen = ({ navigation }) => {
   }, [authCtx, navigation]);
 
   useEffect(() => {
-    const fetchImageUri = async () => {
-      try {
+    if (images) {
+      const fetchImageUri = async () => {
         const uri = await getImageUriFromDatabase();
         setImages(uri);
-      } catch (error) {
-        console.error("Error fetching image URI:", error);
-      }
-    };
-
-    fetchImageUri();
+      };
+      fetchImageUri();
+    }
   }, [isFocused]);
 
   return (

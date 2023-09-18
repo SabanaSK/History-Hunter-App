@@ -1,18 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, Button, Alert } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import { useNavigation } from "@react-navigation/native";
+import * as http from "./../util/http";
 
+import { UserContext } from "../store/UserContext";
 import { fetchRouteDirections } from "../util/location";
 import * as Location from "expo-location";
+import Popup from "../components/ui/Popup";
 
 const LocalPositionScreen = ({ route }) => {
+  const navigation = useNavigation();
   const { details } = route.params;
   const [userLocation, setUserLocation] = useState(null);
   const [selectedDestination, setSelectedDestination] = useState(null);
   const [routeCoordinates, setRouteCoordinates] = useState([]);
-  const navigation = useNavigation();
+  const [isPopupVisible, setPopupVisible] = useState(false);
+  const [popupStage, setPopupStage] = useState(1);
 
+  const { currentUser } = useContext(UserContext);
+
+  console.log("CurrentUser", currentUser);
+  console.log("details", details);
   const destination = {
     name: details.name,
     coordinate: {
@@ -48,7 +57,7 @@ const LocalPositionScreen = ({ route }) => {
     destinationLocation,
     thresholdInMeters = 50
   ) => {
-    const R = 6371000; 
+    const R = 6371000;
     const dLat = toRad(destinationLocation.latitude - userLocation.latitude);
     const dLon = toRad(destinationLocation.longitude - userLocation.longitude);
 
@@ -77,23 +86,21 @@ const LocalPositionScreen = ({ route }) => {
       setRouteCoordinates(coordinates);
 
       if (isUserNearDestination(userLocation, destination.coordinate)) {
-        Alert.alert(
-          "You are near the destination",
-          "Would you like to proceed to the next screen?",
-          [
-            {
-              text: "Yes",
-              onPress: () => navigation.navigate("TakePhoto"),
-            },
-            {
-              text: "No",
-              style: "cancel",
-            },
-          ]
-        );
+        setPopupStage(1);
+        setPopupVisible(true);
       }
     } catch (error) {
       console.error("Failed to fetch route:", error);
+    }
+  };
+
+  const handleConfirm = async () => {
+    if (popupStage === 1) {
+      setPopupStage(2);
+    } else {
+      setPopupVisible(false);
+      setPopupStage(1);
+      navigation.navigate("Start");
     }
   };
 
@@ -130,6 +137,21 @@ const LocalPositionScreen = ({ route }) => {
           <Polyline coordinates={routeCoordinates} />
         )}
       </MapView>
+      <Popup
+        isVisible={isPopupVisible}
+        header={popupStage === 1 ? "Take a Photo" : "Final Step"}
+        text={
+          popupStage === 1
+            ? "Walk to the area where the hunt was described."
+            : "Nice! Have you been taking the photo?"
+        }
+        answer={popupStage === 1 ? "Ok, I'm here" : "Yes"}
+        onClose={() => {
+          setPopupVisible(false);
+          setPopupStage(1);
+        }}
+        onConfirm={handleConfirm}
+      />
     </View>
   );
 };

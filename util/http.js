@@ -93,3 +93,4 @@ export const saveHunt = async (hunt) => {
     throw error;
   }
 };
+
