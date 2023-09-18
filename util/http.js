@@ -94,3 +94,32 @@ export const saveHunt = async (hunt) => {
   }
 };
 
+export const completeHunt = async (huntId, userId) => {
+  try {
+    // Fetch the current hunt data
+    const res = await axios.get(`${url}/hunts/${huntId}.json`);
+    const currentHunt = res.data;
+    console.log("http", currentHunt);
+
+    // Update the status for the creator
+    if (currentHunt.creator && currentHunt.creator.id === userId) {
+      currentHunt.creator.status = "Medal";
+    }
+
+    // Check if invitees exist
+    if (currentHunt.invitees) {
+      // Update the status for any invitees
+      currentHunt.invitees = currentHunt.invitees.map((invitee) => {
+        if (invitee.id === userId) {
+          return { ...invitee, status: "Medal" };
+        }
+        return invitee;
+      });
+    }
+
+    // Update the hunt data in Firebase
+    await axios.put(`${url}/hunts/${huntId}.json`, currentHunt);
+  } catch (error) {
+    console.error("Failed to complete the hunt", error);
+  }
+};

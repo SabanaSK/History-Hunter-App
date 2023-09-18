@@ -47,13 +47,11 @@ const CreateHuntScreen = ({ props, navigation }) => {
 
   const submitHandler = async () => {
     try {
-     
       const updatedCreator = { ...creator, status: "Active" };
 
-     
       const updatedSelectedFriends = selectedFriends.map((friend) => ({
         ...friend,
-        status: "Active",
+        status: "Planned",
       }));
 
       const newHunt = {

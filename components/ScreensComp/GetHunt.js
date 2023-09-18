@@ -4,11 +4,13 @@ import { useNavigation } from "@react-navigation/native";
 
 import * as http from "../../util/http";
 import { UserContext } from "../../store/UserContext";
+import { HuntContext } from "../../store/HuntContext";
 
 const GetHunt = () => {
-  const [hunts, setHunts] = useState([]);
+  const [localHunts, setLocalHunts] = useState([]);
   const [activeHunts, setActiveHunts] = useState([]);
   const [plannedHunts, setPlannedHunts] = useState([]);
+  const [medalHunts, setMedalHunts] = useState([]);
   const navigation = useNavigation();
   const userCtx = useContext(UserContext);
   const currentUser = userCtx.currentUser.id;
@@ -29,7 +31,7 @@ const GetHunt = () => {
           };
         });
 
-        setHunts(dataArray);
+        setLocalHunts(dataArray);
       } catch (err) {
         console.error("Gethunt error", err.message);
       }
@@ -39,17 +41,34 @@ const GetHunt = () => {
   }, []);
 
   useEffect(() => {
-    if (hunts && hunts.length > 0) {
-      const active = hunts.filter((hunt) => hunt.creator?.id === currentUser);
-      const planned = hunts.filter(
+    if (localHunts && localHunts.length > 0) {
+      const active = localHunts.filter(
+        (hunt) =>
+          hunt.creator?.id === currentUser && hunt.creator?.status === "Active"
+      );
+
+      const planned = localHunts.filter(
         (hunt) =>
           hunt.creator?.id !== currentUser &&
-          hunt.invitees?.some((invitee) => invitee.id === currentUser)
+          hunt.invitees?.some(
+            (invitee) =>
+              invitee.id === currentUser && invitee.status === "Planned"
+          )
+      );
+      const medal = localHunts.filter(
+        (hunt) =>
+          (hunt.creator?.id === currentUser &&
+            hunt.creator?.status === "Medal") ||
+          hunt.invitees?.some(
+            (invitee) =>
+              invitee.id === currentUser && invitee.status === "Medal"
+          )
       );
       setActiveHunts(active);
       setPlannedHunts(planned);
+      setMedalHunts(medal);
     }
-  }, [hunts]);
+  }, [localHunts]);
 
   const renderItem = ({ item }) => (
     <Pressable onPress={() => navigateToConfirmScreen(item)}>
@@ -73,6 +92,14 @@ const GetHunt = () => {
         <Text style={styles.title}>Planned Hunts</Text>
         <FlatList
           data={plannedHunts}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+        />
+      </View>
+      <View>
+        <Text style={styles.title}>Medal Hunts</Text>
+        <FlatList
+          data={medalHunts}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
         />

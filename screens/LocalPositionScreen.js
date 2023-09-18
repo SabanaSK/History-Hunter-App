@@ -2,8 +2,9 @@ import React, { useEffect, useState, useContext } from "react";
 import { View, Button, Alert } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import { useNavigation } from "@react-navigation/native";
-import * as http from "./../util/http";
 
+import * as http from "./../util/http";
+import { HuntContext } from "../store/HuntContext";
 import { UserContext } from "../store/UserContext";
 import { fetchRouteDirections } from "../util/location";
 import * as Location from "expo-location";
@@ -17,11 +18,10 @@ const LocalPositionScreen = ({ route }) => {
   const [routeCoordinates, setRouteCoordinates] = useState([]);
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [popupStage, setPopupStage] = useState(1);
+  const { completeHunt } = useContext(HuntContext);
 
   const { currentUser } = useContext(UserContext);
 
-  console.log("CurrentUser", currentUser);
-  console.log("details", details);
   const destination = {
     name: details.name,
     coordinate: {
@@ -100,6 +100,12 @@ const LocalPositionScreen = ({ route }) => {
     } else {
       setPopupVisible(false);
       setPopupStage(1);
+
+      const huntId = details.id;
+      const userId = currentUser.id;
+
+      await http.completeHunt(huntId, userId);
+
       navigation.navigate("Start");
     }
   };

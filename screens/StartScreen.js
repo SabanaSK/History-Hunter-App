@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, Pressable, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  Alert,
+  FlatList,
+} from "react-native";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 
@@ -8,11 +15,14 @@ import { getImageUriFromDatabase } from "../util/database";
 import ProfileImage from "../components/ScreensComp/ProfileImage";
 import AuthName from "../components/Auth/AuthName";
 import GetHunt from "../components/ScreensComp/GetHunt";
+import { HuntContext } from "../store/HuntContext";
+import { UserContext } from "../store/UserContext";
 
 const StartScreen = ({ navigation }) => {
   const [images, setImages] = useState(null);
   const authCtx = useContext(AuthContext);
   const isFocused = useIsFocused();
+
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -32,6 +42,7 @@ const StartScreen = ({ navigation }) => {
     }
   }, [isFocused]);
 
+ 
   return (
     <View style={styles.rootContainer}>
       <ProfileImage images={images} />
@@ -42,9 +53,7 @@ const StartScreen = ({ navigation }) => {
           <Text style={styles.createHunt}>Create Hunt</Text>
         </Pressable>
       </View>
-      <View>
-        <Text style={styles.medals}>MEDALS</Text>
-      </View>
+     
     </View>
   );
 };
