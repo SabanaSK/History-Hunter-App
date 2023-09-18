@@ -10,13 +10,14 @@ import {
 import Title from "../components/ui/Title";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
+import Popup from "../components/ui/Popup";
 import LocationPicker from "../components/places/LocationPicker";
 import OutlinedButton from "../components/ui/OutlinedButton";
 import { FriendsContext } from "../store/FriendsContext";
 import { HuntContext } from "../store/HuntContext";
 import { UserContext } from "../store/UserContext";
 
-const CreateHuntScreen = ({ props, navigation }) => {
+const CreateHuntScreen = ({ navigation }) => {
   const [enteredHuntTime, setEnteredHuntTime] = useState("");
   const [enteredHuntName, setEnteredHuntName] = useState("");
   const [creator, setCreator] = useState("");
@@ -24,6 +25,7 @@ const CreateHuntScreen = ({ props, navigation }) => {
   const { addHunt } = useContext(HuntContext);
   const { selectedFriends } = useContext(FriendsContext);
   const userCtx = useContext(UserContext);
+  const [isPopupVisible, setPopupVisible] = useState(false);
 
   useEffect(() => {
     setCreator(userCtx.currentUser);
@@ -65,7 +67,7 @@ const CreateHuntScreen = ({ props, navigation }) => {
       addHunt(newHunt);
       setEnteredHuntTime("");
       setEnteredHuntName("");
-      /* After sumbit might navigate to createHunt? */
+      setPopupVisible(true);
     } catch (error) {
       console.error("Failed to create the hunt", error);
     }
@@ -119,6 +121,17 @@ const CreateHuntScreen = ({ props, navigation }) => {
       <View style={styles.btnContainer}>
         <Button onPress={submitHandler}> Create Hunt </Button>
       </View>
+      <Popup
+        isVisible={isPopupVisible}
+        header="Hunt successfully created!"
+        text="Would you like to go to StartScreen?"
+        onConfirm={() => {
+          setPopupVisible(false);
+          navigation.navigate("Start");
+        }}
+        onClose={() => setPopupVisible(false)}
+        answer="Yes"
+      />
     </View>
   );
 };
