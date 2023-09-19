@@ -98,7 +98,6 @@ export const completeHunt = async (huntId, userId) => {
   try {
     const res = await axios.get(`${url}/hunts/${huntId}.json`);
     const currentHunt = res.data;
-    console.log("http", currentHunt);
 
     if (currentHunt.creator && currentHunt.creator.id === userId) {
       currentHunt.creator.status = "Medal";

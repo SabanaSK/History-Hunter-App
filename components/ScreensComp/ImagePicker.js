@@ -72,13 +72,12 @@ const styles = StyleSheet.create({
   camera: {
     width: width,
     height: height / 2.5,
-    alignItems: "center",/* få den i center*/
-    justifyContent: "flex-end", /* Få camera att vara längds ner */
+    alignItems: "center",
+    justifyContent: "flex-end", 
   },
   preview: {
     width: width,
     height: height / 2,
-    backgroundColor: "#FFF8B4",
     marginVertical: 8,
     justifyContent: "center",
     alignItems: "center",

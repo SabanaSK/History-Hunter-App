@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 import Button from '../ui/Button';
 import AuthInput from './AuthInput';
@@ -39,7 +39,7 @@ const AuthForm = ({ credentialsInvalid, isLogin, onSubmit }) => {
 
 
   return (
-    <View>
+    <View style={styles.container} >
       <AuthInput
         placeholder="Email"
         value={enteredEmail}
@@ -64,7 +64,7 @@ const AuthForm = ({ credentialsInvalid, isLogin, onSubmit }) => {
         isInvalid={passwordIsInvalid}
       />
 
-      <View>
+      <View style={styles.btnContainer} >
         <Button onPress={submitHandler}>
           {isLogin ? "Log In" : "Sign Up"}
         </Button>
@@ -72,5 +72,16 @@ const AuthForm = ({ credentialsInvalid, isLogin, onSubmit }) => {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+container: {
+  alignContent: 'center',
+  display: "flex",
+},
+  btnContainer: {
+    padding: 20,
+  }
+
+});
 
 export default AuthForm;

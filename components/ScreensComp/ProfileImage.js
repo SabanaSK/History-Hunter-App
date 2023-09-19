@@ -1,42 +1,44 @@
-import React from 'react';
-import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React from "react";
+import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-import IconButton from '../ui/IconButton';
-import defaultImage from "../../assets/profile.png"
+import IconButton from "../ui/IconButton";
+import defaultImage from "../../assets/profile.png";
+import AuthName from "./../Auth/AuthName";
 
 const ProfileImage = ({ images }) => {
   const navigation = useNavigation();
-/*   console.log("images at profileimage",images) */
   return (
     <View style={styles.container}>
-      <Image
-        source={images ? { uri: images } : defaultImage}
-        defaultSource={defaultImage}
-        style={styles.profileImage}
-      />
-      <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}>
-        <IconButton
-          icon="edit"
-          size={30}
+      <View style={styles.imageContainer}>
+        <Image
+          source={images ? { uri: images } : defaultImage}
+          defaultSource={defaultImage}
+          style={styles.profileImage}
         />
-      </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
+          <IconButton icon="edit" size={40} />
+        </TouchableOpacity>
+      </View>
+      <AuthName />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: "center",
+  },
+  imageContainer: {
     flexDirection: "row",
-    alignItems: 'center',
+    paddingLeft: 50,
   },
   profileImage: {
-    width: 200,
-    height: 200,
-    borderRadius: 100, // This will make the image circular
+    width: 250,
+    height: 250,
+    borderRadius: 100,
   },
-
-
 });
 
-export default ProfileImage
+export default ProfileImage;

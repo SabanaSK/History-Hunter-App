@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  Alert,
-  FlatList,
-} from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 
@@ -13,16 +6,13 @@ import IconButton from "../components/ui/IconButton";
 import { AuthContext } from "../store/AuthContext";
 import { getImageUriFromDatabase } from "../util/database";
 import ProfileImage from "../components/ScreensComp/ProfileImage";
-import AuthName from "../components/Auth/AuthName";
 import GetHunt from "../components/ScreensComp/GetHunt";
-import { HuntContext } from "../store/HuntContext";
-import { UserContext } from "../store/UserContext";
+import { Colors } from "../constants/Colors";
 
 const StartScreen = ({ navigation }) => {
   const [images, setImages] = useState(null);
   const authCtx = useContext(AuthContext);
   const isFocused = useIsFocused();
-
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -42,18 +32,15 @@ const StartScreen = ({ navigation }) => {
     }
   }, [isFocused]);
 
- 
   return (
     <View style={styles.rootContainer}>
       <ProfileImage images={images} />
-      <AuthName />
       <GetHunt />
       <View>
         <Pressable onPress={() => navigation.navigate("CreateHunt")}>
           <Text style={styles.createHunt}>Create Hunt</Text>
         </Pressable>
       </View>
-     
     </View>
   );
 };
@@ -61,25 +48,15 @@ const StartScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
+    display: "flex",
     padding: 30,
   },
-  title: {
-    fontSize: 15,
-    fontWeight: "bold",
-    marginBottom: 8,
-    marginTop: 30,
-    color: "pink",
-  },
   createHunt: {
-    fontSize: 16,
+    fontSize: 25,
     fontWeight: "bold",
-    padding: 20,
+    padding: 40,
     textAlign: "center",
-  },
-  medals: {
-    textAlign: "center",
-    fontSize: 20,
-    color: "blue",
+    color: Colors.yellow,
   },
 });
 

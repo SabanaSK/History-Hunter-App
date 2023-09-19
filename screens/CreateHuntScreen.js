@@ -10,12 +10,11 @@ import {
 import Title from "../components/ui/Title";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
-import Popup from "../components/ui/Popup";
 import LocationPicker from "../components/places/LocationPicker";
-import OutlinedButton from "../components/ui/OutlinedButton";
 import { FriendsContext } from "../store/FriendsContext";
 import { HuntContext } from "../store/HuntContext";
 import { UserContext } from "../store/UserContext";
+import IconButton from "../components/ui/IconButton";
 
 const CreateHuntScreen = ({ navigation }) => {
   const [enteredHuntTime, setEnteredHuntTime] = useState("");
@@ -25,13 +24,11 @@ const CreateHuntScreen = ({ navigation }) => {
   const { addHunt } = useContext(HuntContext);
   const { selectedFriends } = useContext(FriendsContext);
   const userCtx = useContext(UserContext);
-  const [isPopupVisible, setPopupVisible] = useState(false);
 
   useEffect(() => {
     setCreator(userCtx.currentUser);
   }, [userCtx]);
 
-  //console.log("creator", creator);
   const locationHandler = useCallback((locationInfo) => {
     setLocation(locationInfo);
   }, []);
@@ -67,7 +64,7 @@ const CreateHuntScreen = ({ navigation }) => {
       addHunt(newHunt);
       setEnteredHuntTime("");
       setEnteredHuntName("");
-      setPopupVisible(true);
+      navigation.navigate("Start");
     } catch (error) {
       console.error("Failed to create the hunt", error);
     }
@@ -76,14 +73,11 @@ const CreateHuntScreen = ({ navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <OutlinedButton
-          name="person-add"
-          size={24}
-          color="black"
-          pressHandler={() => navigation.navigate("InviteFriends")}
-        >
-          Invite friend
-        </OutlinedButton>
+        <IconButton
+          icon="person-add"
+          size={40}
+          onPress={() => navigation.navigate("InviteFriends")}
+        />
       ),
     });
   }, [navigation]);
@@ -109,29 +103,11 @@ const CreateHuntScreen = ({ navigation }) => {
           }
           label="What do you want to call your hunt?"
         />
-        <View style={styles.selectedFriends}>
-          {selectedFriends.map((friend, index) => (
-            <View key={index} style={styles.friendContainer}>
-              <Text style={styles.text}>{friend.name}</Text>
-            </View>
-          ))}
-        </View>
       </View>
       <LocationPicker locationHandler={locationHandler} />
       <View style={styles.btnContainer}>
         <Button onPress={submitHandler}> Create Hunt </Button>
       </View>
-      <Popup
-        isVisible={isPopupVisible}
-        header="Hunt successfully created!"
-        text="Would you like to go to StartScreen?"
-        onConfirm={() => {
-          setPopupVisible(false);
-          navigation.navigate("Start");
-        }}
-        onClose={() => setPopupVisible(false)}
-        answer="Yes"
-      />
     </View>
   );
 };
@@ -139,30 +115,29 @@ const CreateHuntScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    justifyConten: "space-between",
   },
   container: {
     alignItems: "center",
     padding: 20,
   },
   selectedFriends: {
-    flexDirection: "row", // This will align children (friend names) horizontally.
-    flexWrap: "wrap", // This will wrap to the next line if there's no space left.
-    alignItems: "center", // Vertically centers the items.
-    justifyContent: "center", // Horizontally centers the items.
-    padding: 10,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
+    justifyContent: "center",
   },
   friendContainer: {
-    margin: 5, // Gives space around each name.
+    margin: 5,
   },
   text: {
     color: "#2EFF00",
-    fontSize: 30,
+    fontSize: 20,
   },
   btnContainer: {
     alignItems: "center",
     marginBottom: 50,
   },
+  
 });
 
 export default CreateHuntScreen;

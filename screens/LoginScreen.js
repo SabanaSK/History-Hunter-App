@@ -16,13 +16,11 @@ const LoginScreen = () => {
      
       const token = await http.signinUser(email, password);
       authCtx.authenticate(token);
-      /* console.log("data:", data) */
+ 
    
     } catch (error) {
       console.log(JSON.stringify(error))
       alert("Wrong email or password")
-      /* Här kan lägga till olika hantering för olika error. Ex 400 wller 401 */
-   
     }
    
     setIsAuthenticating(false);

@@ -29,8 +29,10 @@ const styles = StyleSheet.create({
     borderColor: Colors.gray,
     borderRadius: 5,
     padding: 5,
-    margin: 6,
-    width: 200
+    margin: 10,
+    width: 200,
+    marginHorizontal: 45
   }
 });
+
 export default AuthInput;

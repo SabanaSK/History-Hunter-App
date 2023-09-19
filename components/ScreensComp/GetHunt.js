@@ -2,17 +2,18 @@ import { View, Text, FlatList, StyleSheet, Pressable } from "react-native";
 import { useState, useEffect, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import * as http from "../../util/http";
 import { UserContext } from "../../store/UserContext";
 import { HuntContext } from "../../store/HuntContext";
+import { Colors } from "../../constants/Colors";
 
 const GetHunt = () => {
-  const [localHunts, setLocalHunts] = useState([]);
   const [activeHunts, setActiveHunts] = useState([]);
   const [plannedHunts, setPlannedHunts] = useState([]);
   const [medalHunts, setMedalHunts] = useState([]);
   const navigation = useNavigation();
   const userCtx = useContext(UserContext);
+  const huntCtx = useContext(HuntContext);
+
   const currentUser = userCtx.currentUser.id;
 
   const navigateToConfirmScreen = (huntDetails) => {
@@ -20,34 +21,13 @@ const GetHunt = () => {
   };
 
   useEffect(() => {
-    const fetchHunts = async () => {
-      try {
-        const data = await http.getHunts();
-
-        const dataArray = Object.keys(data || {}).map((key) => {
-          return {
-            id: key,
-            ...data[key],
-          };
-        });
-
-        setLocalHunts(dataArray);
-      } catch (err) {
-        console.error("Gethunt error", err.message);
-      }
-    };
-
-    fetchHunts();
-  }, []);
-
-  useEffect(() => {
-    if (localHunts && localHunts.length > 0) {
-      const active = localHunts.filter(
+    if (huntCtx.hunts && huntCtx.hunts.length > 0) {
+      const active = huntCtx.hunts.filter(
         (hunt) =>
           hunt.creator?.id === currentUser && hunt.creator?.status === "Active"
       );
 
-      const planned = localHunts.filter(
+      const planned = huntCtx.hunts.filter(
         (hunt) =>
           hunt.creator?.id !== currentUser &&
           hunt.invitees?.some(
@@ -55,7 +35,7 @@ const GetHunt = () => {
               invitee.id === currentUser && invitee.status === "Planned"
           )
       );
-      const medal = localHunts.filter(
+      const medal = huntCtx.hunts.filter(
         (hunt) =>
           (hunt.creator?.id === currentUser &&
             hunt.creator?.status === "Medal") ||
@@ -68,7 +48,7 @@ const GetHunt = () => {
       setPlannedHunts(planned);
       setMedalHunts(medal);
     }
-  }, [localHunts]);
+  }, [huntCtx.hunts]);
 
   const renderItem = ({ item }) => (
     <Pressable onPress={() => navigateToConfirmScreen(item)}>
@@ -97,7 +77,7 @@ const GetHunt = () => {
         />
       </View>
       <View>
-        <Text style={styles.title}>Medal Hunts</Text>
+        <Text style={styles.title}>Medal</Text>
         <FlatList
           data={medalHunts}
           keyExtractor={(item) => item.id}
@@ -113,9 +93,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 20,
-    color: "#FF0075",
+    fontSize: 25,
+    color: Colors.pink,
+    padding: 10
   },
+  Text: {
+    fontSize: 18,
+    padding: 5,
+    fontWeight: "bold"
+  }
 });
 
 export default GetHunt;

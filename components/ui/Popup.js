@@ -1,6 +1,8 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
+import { Colors } from "../../constants/Colors";
+
 const Popup = ({ isVisible, text, onClose, onConfirm, header, answer }) => {
   if (!isVisible) return null;
 
@@ -11,10 +13,10 @@ const Popup = ({ isVisible, text, onClose, onConfirm, header, answer }) => {
         <Text>{text}</Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={onConfirm} style={styles.button}>
-            <Text>{answer}</Text>
+            <Text style={styles.text}>{answer}</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={onClose} style={styles.button}>
-            <Text>No</Text>
+            <Text style={styles.text}>No</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -33,6 +35,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "rgba(0,0,0,0.5)",
   },
+  popupHeader: {
+    fontSize: 20,
+    textAlign: "center",
+    fontWeight: "bold",
+    paddingBottom: 15,
+  },
   popup: {
     backgroundColor: "white",
     padding: 20,
@@ -44,9 +52,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   button: {
-    backgroundColor: "#007bff",
+    backgroundColor: Colors.purple,
     padding: 10,
     borderRadius: 5,
+  },
+  text: {
+    color: "white",
+    fontSize: 16,
   },
 });
 
