@@ -57,7 +57,14 @@ const GetHunt = () => {
       </View>
     </Pressable>
   );
-
+  const renderMedal = ({ item }) => (
+    <Pressable onPress={() => navigateToConfirmScreen(item)}>
+      <View style={styles.medalContainer}>
+        <Text style={styles.medalText}>{item.name}</Text>
+        <Text style={styles.complete}>Completed</Text>
+      </View>
+    </Pressable>
+  );
   return (
     <View>
       <View>
@@ -81,7 +88,7 @@ const GetHunt = () => {
         <FlatList
           data={medalHunts}
           keyExtractor={(item) => item.id}
-          renderItem={renderItem}
+          renderItem={renderMedal}
         />
       </View>
     </View>
@@ -95,13 +102,25 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 25,
     color: Colors.pink,
-    padding: 10
+    padding: 10,
   },
   Text: {
     fontSize: 18,
     padding: 5,
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
+  medalContainer: {
+    flexDirection: "row",
+  },
+  medalText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    padding: 5,
+  },
+  complete: {
+    color: Colors.green,
+    fontWeight: "bold",
+  },
 });
 
 export default GetHunt;
