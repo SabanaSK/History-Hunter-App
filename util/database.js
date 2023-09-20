@@ -21,14 +21,12 @@ export const initializeImagesDBAsync = () => {
 };
 
 export const insertImageAsync = (profileImage) => {
-  console.log("Inserting image:", profileImage); // Log the image being inserted
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
         `INSERT INTO images (imageUri) VALUES (?)`,
         [profileImage.imageUri],
         (_, result) => {
-          console.log("result from insert", result);
           resolve(result);
         },
         (_, error) => {
@@ -49,7 +47,7 @@ export const getImageUriFromDatabase = () => {
         (_, result) => {
           if (result.rows.length > 0) {
             resolve(result.rows.item(0).imageUri);
-          } 
+          }
         },
         (_, error) => {
           reject(error);

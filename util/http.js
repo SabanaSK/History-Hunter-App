@@ -33,7 +33,6 @@ export const updateUser = async (displayName, idToken) => {
     }
   );
 
-  /*   console.log('http name', resp.data.localId) */
   return resp.data.localId;
 };
 

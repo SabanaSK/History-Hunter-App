@@ -8,7 +8,7 @@ import { UserContext } from "../store/UserContext";
 
 const SignupScreen = () => {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
-  const authCtx = useContext(AuthContext)
+  const authCtx = useContext(AuthContext);
   const userCtx = useContext(UserContext);
 
   const authenticationHandler = async ({ email, password, displayName }) => {
@@ -21,13 +21,11 @@ const SignupScreen = () => {
       await http.saveUsers({ name: displayName, id: localId });
 
       userCtx.addUser(displayName, localId);
-
     } catch (error) {
-      console.log("singUp error :", error)
-      alert("Wrong Credentials")
+      alert("Wrong Credentials");
     }
     setIsAuthenticating(false);
-  }
+  };
   if (isAuthenticating) {
     return <LoadingOverlay message={"User is Creating..."} />;
   }

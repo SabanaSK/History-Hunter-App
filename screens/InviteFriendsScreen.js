@@ -18,7 +18,6 @@ const InviteFriendsScreen = ({ navigation }) => {
       addFriend(selectedUser);
     }
   };
-  //console.log("Selected Friends  ", selectedFriends);
 
   return (
     <View style={styles.mainContainer}>

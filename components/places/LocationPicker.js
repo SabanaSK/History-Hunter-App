@@ -48,7 +48,7 @@ const LocationPicker = ({ locationHandler }) => {
       <View style={styles.preview}>{previewContent}</View>
       <View style={styles.buttonContainer}>
         <OutlinedButton icon="map" pressHandler={pickOnMapHandler}>
-          Pick on map
+          Choose you location
         </OutlinedButton>
       </View>
     </View>
